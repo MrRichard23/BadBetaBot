@@ -25,4 +25,6 @@ public final class Constants {
     public static final int CLOSE_INTAKE_PISTON_PORT = 1;
     public static final int COMPRESSER_MIN_PRESSURE = 80;
     public static final int COMPRESSER_MAX_PRESSURE = 120;
+    public static final int OPEN_CLIMBER_PISTON = 2;
+    public static final int CLOSE_CLIMBER_PISTON = 3;
 }

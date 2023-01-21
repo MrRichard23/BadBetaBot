@@ -23,7 +23,7 @@ public class IntakeCommand extends CommandBase{
         
 
         if(oldAButton == false && newAButton == true){
-             toggleAButton = false;
+             toggleAButton = true;
         }
         else{
             toggleAButton = false;
@@ -37,13 +37,6 @@ public class IntakeCommand extends CommandBase{
             intake.setForwardIntake();
           }
         }
-        if(Operator.getAButton() == true){
-          intake.setForwardIntake();
-        }
-        else if(Operator.getBButton() == true){
-            intake.setBackwardIntake();
-        }
-
         oldAButton = newAButton;
     }
 }

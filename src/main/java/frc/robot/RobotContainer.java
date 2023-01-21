@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import frc.robot.commands.Teleop.IntakeCommand;
+import frc.robot.commands.Teleop.ClimberCommand;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
@@ -25,9 +27,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = Drivetrain.getInstance();
   private final Intake intake = Intake.getInstance();
+  private final Climber climber = Climber.getInstance();
 
   private final Command DrivetrainCommand = new DrivetrainCommand();
   private final Command IntakeCommand = new IntakeCommand();
+  private final Command ClimberCommand = new ClimberCommand();
   private final Compressor compressor = new Compressor(Constants.PNEUMATIC_PORT, PneumaticsModuleType.REVPH);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -39,6 +43,7 @@ public class RobotContainer {
     configureButtonBindings();
     drivetrain.setDefaultCommand(new DrivetrainCommand());
     intake.setDefaultCommand(new IntakeCommand());
+    climber.setDefaultCommand(new ClimberCommand());
   }
 
   /**
