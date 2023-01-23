@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Operator;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.Logic;
 
 public class IntakeCommand extends CommandBase{
     Intake intake;
@@ -11,6 +12,7 @@ public class IntakeCommand extends CommandBase{
     private boolean oldAButton = true;
     private boolean newAButton = false;
     private boolean toggleAButton = false;
+    private boolean alternateAButton = false;
 
     public IntakeCommand() {
         intake = Intake.getInstance();
@@ -20,22 +22,12 @@ public class IntakeCommand extends CommandBase{
     public void execute() {
         newAButton = Operator.getAButton();
 
-        
+        toggleAButton = Logic.justPressedLogic(newAButton, oldAButton);
 
-        if(oldAButton == false && newAButton == true){
-             toggleAButton = true;
-        }
-        else{
-            toggleAButton = false;
-        }
+        alternateAButton = Logic.justPressed2ToggleLogic(newAButton, oldAButton, alternateAButton);
 
         if(toggleAButton == true){
-          if(intake.getPiston() == DoubleSolenoid.Value.kForward){
-             intake.setBackwardIntake();
-          }
-          else{
-            intake.setForwardIntake();
-          }
+          intake.setIntake(alternateAButton);
         }
         oldAButton = newAButton;
     }

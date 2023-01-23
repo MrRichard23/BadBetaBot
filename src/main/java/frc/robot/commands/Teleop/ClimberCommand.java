@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Operator;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.Logic;
 
 public class ClimberCommand extends CommandBase{
     Climber climber;
@@ -11,6 +12,7 @@ public class ClimberCommand extends CommandBase{
     private boolean oldBButton = true;
     private boolean newBButton = false;
     private boolean toggleBButton = false;
+    private boolean alternateBButton = false;
 
     public ClimberCommand() {
         climber = Climber.getInstance();
@@ -20,22 +22,12 @@ public class ClimberCommand extends CommandBase{
     public void execute() {
         newBButton = Operator.getBButton();
 
-        
+        toggleBButton = Logic.justPressedLogic(newBButton, oldBButton);
 
-        if(oldBButton == false && newBButton == true){
-             toggleBButton = true;
-        }
-        else{
-            toggleBButton = false;
-        }
+        alternateBButton = Logic.justPressed2ToggleLogic(newBButton, oldBButton, alternateBButton);
 
         if(toggleBButton == true){
-          if(climber.getPiston() == DoubleSolenoid.Value.kForward){
-             climber.setBackwardClimber();
-          }
-          else{
-            climber.setForwardClimber();
-          }
+          climber.setClimber(alternateBButton);
         }
         oldBButton = newBButton;
     }

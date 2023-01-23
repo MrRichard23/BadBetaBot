@@ -5,15 +5,17 @@
 package frc.robot.commands.Teleop;
 import frc.robot.Operator;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.Logic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DrivetrainCommand extends CommandBase{
   /** Creates a new Easy. */
   Drivetrain drivetrain;
 
-  private boolean toggleTrigger = false;
-  private boolean oldTrigger = true;
-  private boolean newTrigger = false;
+  private boolean toggleLTrigger = false;
+  private boolean oldLTrigger = true;
+  private boolean newLTrigger = false;
+  private boolean alternateLTrigger = false;
   public DrivetrainCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrain = Drivetrain.getInstance();   
@@ -27,19 +29,26 @@ public class DrivetrainCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    newTrigger = Operator.getLeftTrigger();
-    if(newTrigger == true && oldTrigger == false && toggleTrigger == false){
-      toggleTrigger = true;
-    }
-    else if(newTrigger == true && oldTrigger == false && toggleTrigger == true){
-      toggleTrigger = false;
-    }
+    newLTrigger = Operator.getLeftTrigger();
+    
+    alternateLTrigger = Logic.justPressed2ToggleLogic(newLTrigger, oldLTrigger, alternateLTrigger);
+
+    // toggleLTrigger = Logic.justPressedLogic(newLTrigger, oldLTrigger);
+
+    // if(toggleLTrigger == true){
+    //   if(alternateLTrigger == false){
+    //     alternateLTrigger = true;
+    //   }
+    //   else{
+    //     alternateLTrigger = false;
+    //   }
+    // }
     if(Operator.getRightTrigger() == true){
       drivetrain.setSenLeftDrive(0);
       drivetrain.setSenRightDrive(0);
     }
     else{
-      if(toggleTrigger == false){
+      if(alternateLTrigger == false){
         drivetrain.setSenLeftDrive(Operator.getLeftJoystick());
         drivetrain.setSenRightDrive(Operator.getRightJoystick());
       }
@@ -49,7 +58,7 @@ public class DrivetrainCommand extends CommandBase{
       }
     }
 
-    oldTrigger = newTrigger;
+    oldLTrigger = newLTrigger;
   }
 
   // Called once the command ends or is interrupted.

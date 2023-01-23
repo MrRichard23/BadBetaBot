@@ -18,11 +18,13 @@ public class Intake extends SubsystemBase{
         return intake;
     }
 
-    public void setForwardIntake(){
-      intakePiston.set(DoubleSolenoid.Value.kForward);
-    }
-    public void setBackwardIntake(){
-        intakePiston.set(DoubleSolenoid.Value.kReverse);
+    public void setIntake(boolean setIntake){
+       if(setIntake == true){
+         intakePiston.set(DoubleSolenoid.Value.kForward);
+       }
+       else{
+         intakePiston.set(DoubleSolenoid.Value.kReverse);
+       }
     }
     public DoubleSolenoid.Value getPiston() {
         return intakePiston.get();

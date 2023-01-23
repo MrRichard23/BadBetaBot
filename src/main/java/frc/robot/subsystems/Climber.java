@@ -19,11 +19,13 @@ public class Climber extends SubsystemBase{
         }
         return climber;
     }
-    public void setForwardClimber(){
-        climberPiston.set(DoubleSolenoid.Value.kForward);
-    }
-    public void setBackwardClimber(){
-        climberPiston.set(DoubleSolenoid.Value.kReverse);
+    public void setClimber(boolean setClimber){
+        if(setClimber == true){
+            climberPiston.set(DoubleSolenoid.Value.kForward);
+        }
+        else{
+            climberPiston.set(DoubleSolenoid.Value.kReverse);
+        }
     }
     public DoubleSolenoid.Value getPiston() {
         return climberPiston.get();
