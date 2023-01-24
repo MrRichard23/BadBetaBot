@@ -38,5 +38,8 @@ public class Operator{
     public static boolean getBButton() {
         return xboxController.getBButton();
     }
+    public static boolean getXButton() {
+        return xboxController.getXButton();
+    }
   
 }

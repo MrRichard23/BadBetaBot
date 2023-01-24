@@ -17,6 +17,7 @@ public final class Constants {
     public static final int FOLLOW_LEFT_TALON_PORT = 17;
     public static final int MASTER_RIGHT_TALON_PORT = 18;
     public static final int FOLLOW_RIGHT_TALON_PORT = 19;
+    public static final int INTAKE_MOTOR = 20;
     public static final int JOYSTICK_LEFT_TALON_PORT = 0;
     public static final int JOYSTICK_RIGHT_TALON_PORT = 1;
     public static final int XBOX_CONTROLLER_PORT = 2;

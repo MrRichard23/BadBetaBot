@@ -12,6 +12,8 @@ import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import frc.robot.commands.Teleop.IntakeCommand;
+import frc.robot.commands.Teleop.IntakeMotorCommand;
+import frc.robot.subsystems.IntakeMotor;
 import frc.robot.commands.Teleop.ClimberCommand;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -27,6 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = Drivetrain.getInstance();
   private final Intake intake = Intake.getInstance();
+  private final IntakeMotor intakeMotor = IntakeMotor.getInstance();
   private final Climber climber = Climber.getInstance();
 
   private final Command DrivetrainCommand = new DrivetrainCommand();
@@ -44,6 +47,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new DrivetrainCommand());
     intake.setDefaultCommand(new IntakeCommand());
     climber.setDefaultCommand(new ClimberCommand());
+    intakeMotor.setDefaultCommand(new IntakeMotorCommand());
   }
 
   /**
