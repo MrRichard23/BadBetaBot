@@ -28,4 +28,7 @@ public final class Constants {
     public static final int COMPRESSER_MAX_PRESSURE = 120;
     public static final int OPEN_CLIMBER_PISTON = 2;
     public static final int CLOSE_CLIMBER_PISTON = 3;
+    public static final int UPPER_FEEDER = 23;
+    public static final int LOWER_FEEDER = 22;
+    public static final int SHOOTER_MOTOR = 25;
 }

@@ -41,5 +41,10 @@ public class Operator{
     public static boolean getXButton() {
         return xboxController.getXButton();
     }
-  
+    public static boolean getYButton() {
+        return xboxController.getYButton();
+    }
+    public static boolean getLeftBumper(){
+        return xboxController.getLeftBumper();
+    }
 }

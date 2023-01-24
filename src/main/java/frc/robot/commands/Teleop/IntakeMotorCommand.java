@@ -9,10 +9,10 @@ import frc.robot.Logic;
 public class IntakeMotorCommand extends CommandBase{
     IntakeMotor intakeMotor;
 
-    private boolean oldXButton = true;
-    private boolean newXButton = false;
-    private boolean toggleXButton = false;
-    private boolean alternateXButton = false;
+    private boolean oldleftBumper = true;
+    private boolean newleftBumper = false;
+    private boolean toggleleftBumper = false;
+    private boolean alternateleftBumper = false;
 
     public IntakeMotorCommand() {
         intakeMotor = IntakeMotor.getInstance();
@@ -20,21 +20,21 @@ public class IntakeMotorCommand extends CommandBase{
     }
 
     public void execute() {
-        newXButton = Operator.getXButton();
+        newleftBumper = Operator.getLeftBumper();
 
-        toggleXButton = Logic.justPressedLogic(newXButton, oldXButton);
+        toggleleftBumper = Logic.justPressedLogic(newleftBumper, oldleftBumper);
 
-        alternateXButton = Logic.justPressed2ToggleLogic(newXButton, oldXButton, alternateXButton);
+        alternateleftBumper = Logic.justPressed2ToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper);
 
-        if(toggleXButton == true){
-            if(alternateXButton == true){
+        if(toggleleftBumper == true){
+            if(alternateleftBumper == true){
                 intakeMotor.setIntakeMotor(1);
             }
             else{
                 intakeMotor.setIntakeMotor(0);
             }
         }
-        oldXButton = newXButton;
+        oldleftBumper = newleftBumper;
     
      }
 
