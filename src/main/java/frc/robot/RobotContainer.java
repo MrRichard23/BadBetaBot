@@ -38,11 +38,11 @@ public class RobotContainer {
   private final Feeder feeder = Feeder.getInstance();
   private final Shooter shooter = Shooter.getInstance();
 
-  private final Command DrivetrainCommand = new DrivetrainCommand();
-  private final Command IntakeCommand = new IntakeCommand();
-  private final Command ClimberCommand = new ClimberCommand();
-  private final Command FeederCommand = new FeederCommand();
-  private final Command ShooterCommand = new ShooterCommand();
+  // private final Command DrivetrainCommand = new DrivetrainCommand();
+  // private final Command IntakeCommand = new IntakeCommand();
+  // private final Command ClimberCommand = new ClimberCommand();
+  // private final Command FeederCommand = new FeederCommand();
+  // private final Command ShooterCommand = new ShooterCommand();
 
   private final Compressor compressor = new Compressor(Constants.PNEUMATIC_PORT, PneumaticsModuleType.REVPH);
 
@@ -76,6 +76,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null; //TODO finish
+    return null;
   }
 }

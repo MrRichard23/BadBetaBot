@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.Teleop;
 import frc.robot.Operator;
 import frc.robot.subsystems.Drivetrain;
@@ -12,7 +8,6 @@ public class DrivetrainCommand extends CommandBase{
   /** Creates a new Easy. */
   Drivetrain drivetrain;
 
-  private boolean toggleLTrigger = false;
   private boolean oldLTrigger = true;
   private boolean newLTrigger = false;
   private boolean alternateLTrigger = false;
@@ -33,28 +28,18 @@ public class DrivetrainCommand extends CommandBase{
     
     alternateLTrigger = Logic.justPressed2ToggleLogic(newLTrigger, oldLTrigger, alternateLTrigger);
 
-    // toggleLTrigger = Logic.justPressedLogic(newLTrigger, oldLTrigger);
-
-    // if(toggleLTrigger == true){
-    //   if(alternateLTrigger == false){
-    //     alternateLTrigger = true;
-    //   }
-    //   else{
-    //     alternateLTrigger = false;
-    //   }
-    // }
     if(Operator.getRightTrigger() == true){
-      drivetrain.setSenLeftDrive(0);
-      drivetrain.setSenRightDrive(0);
+      drivetrain.setLeftDrive(0);
+      drivetrain.setRightDrive(0);
     }
     else{
       if(alternateLTrigger == false){
-        drivetrain.setSenLeftDrive(Operator.getLeftJoystick());
-        drivetrain.setSenRightDrive(Operator.getRightJoystick());
+        drivetrain.setLeftDrive(Operator.getLeftJoystick());
+        drivetrain.setRightDrive(Operator.getRightJoystick());
       }
       else{
-        drivetrain.setSenLeftDrive(-Operator.getRightJoystick());
-        drivetrain.setSenRightDrive(-Operator.getLeftJoystick());
+        drivetrain.setLeftDrive(-Operator.getRightJoystick());
+        drivetrain.setRightDrive(-Operator.getLeftJoystick());
       }
     }
 

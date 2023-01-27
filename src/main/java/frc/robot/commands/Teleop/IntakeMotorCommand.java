@@ -1,7 +1,5 @@
 package frc.robot.commands.Teleop;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.Operator;
 import frc.robot.subsystems.IntakeMotor;
 import frc.robot.Logic;
@@ -9,10 +7,14 @@ import frc.robot.Logic;
 public class IntakeMotorCommand extends CommandBase{
     IntakeMotor intakeMotor;
 
-    private boolean oldleftBumper = true;
-    private boolean newleftBumper = false;
-    private boolean toggleleftBumper = false;
-    private boolean alternateleftBumper = false;
+    private boolean oldYButton = true;
+    private boolean newYButton = false;
+    private boolean toggleYButton = false;
+    private boolean alternateYButton = false;
+
+    private boolean newStartButton = false;
+    private boolean oldStartButton = false;
+    private boolean toggleStartButton = false;
 
     public IntakeMotorCommand() {
         intakeMotor = IntakeMotor.getInstance();
@@ -20,23 +22,34 @@ public class IntakeMotorCommand extends CommandBase{
     }
 
     public void execute() {
-        newleftBumper = Operator.getLeftBumper();
+        newYButton = Operator.getXButton();
 
-        toggleleftBumper = Logic.justPressedLogic(newleftBumper, oldleftBumper);
+        toggleYButton = Logic.justPressedLogic(newYButton, oldYButton);
 
-        alternateleftBumper = Logic.justPressed2ToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper);
+        alternateYButton = Logic.justPressed2ToggleLogic(newYButton, oldYButton, alternateYButton);
 
-        if(toggleleftBumper == true){
-            if(alternateleftBumper == true){
-                intakeMotor.setIntakeMotor(1);
-            }
-            else{
-                intakeMotor.setIntakeMotor(0);
+        newStartButton = Operator.getStartButton();
+
+        toggleStartButton = Logic.justUnPressedLogic(newStartButton, oldStartButton);
+
+        if(newStartButton == true){
+            intakeMotor.setIntakeMotor(-1);
+        }
+        else if(toggleStartButton == true){
+            intakeMotor.setIntakeMotor(0);
+        }
+        else{
+            if(toggleYButton == true){
+                if(alternateYButton == true){
+                    intakeMotor.setIntakeMotor(0);
+                }
+                else{
+                    intakeMotor.setIntakeMotor(1);
+                }
             }
         }
-        oldleftBumper = newleftBumper;
-    
-     }
+        oldYButton = newYButton;
 
-
+        oldStartButton = newStartButton;
+    }
 }

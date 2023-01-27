@@ -1,10 +1,6 @@
 package frc.robot.subsystems;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Operator;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -23,6 +19,6 @@ public class Feeder extends SubsystemBase{
 
     public void setFeeder(double speed){
         lowerFeeder.set(speed);
-        upperFeeder.set(speed);
+        upperFeeder.set(-speed);
     }
 }

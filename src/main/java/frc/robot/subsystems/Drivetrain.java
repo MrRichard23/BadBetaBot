@@ -28,11 +28,11 @@ public class Drivetrain extends SubsystemBase{
         }
         return drivetrain;
     }
-    public void setSenLeftDrive(double speed) {
+    public void setLeftDrive(double speed) {
         masterLeftTalon.set(ControlMode.PercentOutput, -speed * Operator.getLeftThrottle());
         followLeftTalon.set(ControlMode.PercentOutput, -speed * Operator.getLeftThrottle());
     }
-    public void setSenRightDrive(double speed) {
+    public void setRightDrive(double speed) {
         masterRightTalon.set(ControlMode.PercentOutput,speed * Operator.getLeftThrottle());
         followRightTalon.set(ControlMode.PercentOutput,speed * Operator.getLeftThrottle());
     }

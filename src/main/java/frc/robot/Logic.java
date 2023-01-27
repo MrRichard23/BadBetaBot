@@ -9,6 +9,14 @@ public class Logic {
             return false;
         }
     }
+    public static boolean justUnPressedLogic(boolean newInput, boolean oldInput){
+        if(newInput == false && oldInput == true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public static boolean justPressed2ToggleLogic(boolean newInput, boolean oldInput, boolean oldAlternate){
         if(newInput == true && oldInput == false){
             if(oldAlternate == true){
@@ -16,6 +24,19 @@ public class Logic {
             }
             else{
                 return true;
+            }
+        }
+        else{
+            return oldAlternate;
+        }
+    }
+    public static int justPressedMultiToggleLogic(boolean newInput, boolean oldInput, int oldAlternate, int numToggle){
+        if(newInput == true && oldInput == false){
+            if(oldAlternate < numToggle){
+                return (oldAlternate + 1);
+            }
+            else{
+                return 1;
             }
         }
         else{

@@ -1,8 +1,7 @@
 package frc.robot;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
-
 import edu.wpi.first.wpilibj.Joystick;
+
 public class Operator{
     private static Joystick leftJoystick;
     private static Joystick rightJoystick;
@@ -46,5 +45,8 @@ public class Operator{
     }
     public static boolean getLeftBumper(){
         return xboxController.getLeftBumper();
+    }
+    public static boolean getStartButton(){
+        return xboxController.getStartButton();
     }
 }

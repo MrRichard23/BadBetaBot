@@ -1,9 +1,7 @@
 package frc.robot.commands.Teleop;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Operator;
 import frc.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.Logic;
 
 public class IntakeCommand extends CommandBase{
@@ -27,7 +25,7 @@ public class IntakeCommand extends CommandBase{
         alternateAButton = Logic.justPressed2ToggleLogic(newAButton, oldAButton, alternateAButton);
 
         if(toggleAButton == true){
-          intake.setIntake(alternateAButton);
+            intake.setIntake(alternateAButton);
         }
         oldAButton = newAButton;
     }
