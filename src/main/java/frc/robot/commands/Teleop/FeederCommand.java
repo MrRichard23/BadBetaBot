@@ -12,6 +12,11 @@ public class FeederCommand extends CommandBase{
     private boolean toggleLeftBumper = false;
     private boolean alternateLeftBumper = false;
 
+    private boolean oldRightBumper = true;
+    private boolean newRightBumper = false;
+    private boolean toggleRightBumper = false;
+    private boolean alternateRightBumper = false;
+
     private boolean newStartButton = false;
     private boolean oldStartButton = false;
     private boolean toggleStartButton = false;
@@ -22,33 +27,51 @@ public class FeederCommand extends CommandBase{
     }
 
     public void execute() {
-        newLeftBumper = Operator.getYButton();
+        newLeftBumper = Operator.getLeftBumper();
 
         toggleLeftBumper = Logic.justPressedLogic(newLeftBumper, oldLeftBumper);
 
         alternateLeftBumper = Logic.justPressed2ToggleLogic(newLeftBumper, oldLeftBumper, alternateLeftBumper);
+
+        newRightBumper = Operator.getRightBumper();
+
+        toggleRightBumper = Logic.justPressedLogic(newRightBumper, oldRightBumper);
+
+        alternateRightBumper = Logic.justPressed2ToggleLogic(newRightBumper, oldRightBumper, alternateRightBumper);
 
         newStartButton = Operator.getStartButton();
 
         toggleStartButton = Logic.justUnPressedLogic(newStartButton, oldStartButton);
 
         if(newStartButton == true){
-            feeder.setFeeder(-1);
+            feeder.setUpperFeeder(-1);
+            feeder.setLowerFeeder(-1);
         }
         else if(toggleStartButton == true){
-            feeder.setFeeder(0);
+            feeder.setUpperFeeder(0);
+            feeder.setLowerFeeder(0);
         }
         else{
-            if(toggleLeftBumper == true){
-                if(alternateLeftBumper == true){
-                    feeder.setFeeder(1);
+            if(toggleRightBumper == true){
+                if(alternateRightBumper == true){
+                    feeder.setUpperFeeder(1);
                 }
                 else{
-                    feeder.setFeeder(0);
+                    feeder.setUpperFeeder(0);
+                }
+            }
+            if(toggleLeftBumper == true){
+                if(alternateLeftBumper == true){
+                    feeder.setLowerFeeder(1);
+                }
+                else{
+                    feeder.setLowerFeeder(0);
                 }
             }
         }
         oldLeftBumper = newLeftBumper;
+
+        oldRightBumper = newRightBumper;
         
         oldStartButton = newStartButton;
     }

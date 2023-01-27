@@ -10,7 +10,7 @@ public class ShooterCommand extends CommandBase{
     private boolean oldleftBumper = false;
     private boolean newleftBumper = false;
     private boolean toggleleftBumper = false;
-    private int alternateleftBumper = 2;
+    private int alternateleftBumper = 1;
     
     private boolean newStartButton = false;
     private boolean oldStartButton = false;
@@ -22,21 +22,22 @@ public class ShooterCommand extends CommandBase{
     }
 
     public void execute() {
-        newleftBumper = Operator.getLeftBumper();
+        newleftBumper = Operator.getYButton();
 
         toggleleftBumper = Logic.justPressedLogic(newleftBumper, oldleftBumper);
 
-        alternateleftBumper = Logic.justPressedMultiToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper, 4);
+        alternateleftBumper = Logic.justPressedMultiToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper, 5);
 
         newStartButton = Operator.getStartButton();
 
         toggleStartButton = Logic.justUnPressedLogic(newStartButton, oldStartButton);
 
         if(newStartButton == true){
-            shooter.setShooter(1);
+            shooter.setShooter(-1);
         }
         else if(toggleStartButton == true){
             shooter.setShooter(0);
+            alternateleftBumper = 1;
         }
         else{
             System.out.println(alternateleftBumper);
@@ -52,6 +53,9 @@ public class ShooterCommand extends CommandBase{
                 }
                 else if(alternateleftBumper == 4){
                     shooter.setShooter(0.75);
+                }
+                else if(alternateleftBumper == 5){
+                    shooter.setShooter(1);
                 }
             }
         }

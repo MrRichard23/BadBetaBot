@@ -46,6 +46,9 @@ public class Operator{
     public static boolean getLeftBumper(){
         return xboxController.getLeftBumper();
     }
+    public static boolean getRightBumper(){
+        return xboxController.getRightBumper();
+    }
     public static boolean getStartButton(){
         return xboxController.getStartButton();
     }

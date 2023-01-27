@@ -17,8 +17,10 @@ public class Feeder extends SubsystemBase{
         return feeder;
     }
 
-    public void setFeeder(double speed){
-        lowerFeeder.set(speed);
+    public void setUpperFeeder(double speed){
         upperFeeder.set(-speed);
+    }
+    public void setLowerFeeder(double speed){
+        lowerFeeder.set(speed);
     }
 }
