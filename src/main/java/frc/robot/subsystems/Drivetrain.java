@@ -47,5 +47,7 @@ public class Drivetrain extends SubsystemBase{
     public void setStop() {
         masterRightTalon.set(ControlMode.PercentOutput, 0);
         followRightTalon.set(ControlMode.PercentOutput, 0);
+        masterLeftTalon.set(ControlMode.PercentOutput, 0);
+        followLeftTalon.set(ControlMode.PercentOutput, 0);
     }
 }
