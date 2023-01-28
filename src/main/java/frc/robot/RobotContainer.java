@@ -21,6 +21,9 @@ import frc.robot.commands.Teleop.FeederCommand;
 import frc.robot.subsystems.Feeder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import frc.robot.commands.Auton.Practice;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -37,6 +40,7 @@ public class RobotContainer {
   private final Climber climber = Climber.getInstance();
   private final Feeder feeder = Feeder.getInstance();
   private final Shooter shooter = Shooter.getInstance();
+  public static SendableChooser<Command> autonCommandChooser = new SendableChooser<>();
 
   // private final Command DrivetrainCommand = new DrivetrainCommand();
   // private final Command IntakeCommand = new IntakeCommand();
@@ -52,13 +56,15 @@ public class RobotContainer {
     compressor.enableAnalog(Constants.COMPRESSER_MIN_PRESSURE, Constants.COMPRESSER_MAX_PRESSURE);
 
     // Configure the button bindings
-    configureButtonBindings();
     drivetrain.setDefaultCommand(new DrivetrainCommand());
     intake.setDefaultCommand(new IntakeCommand());
     climber.setDefaultCommand(new ClimberCommand());
     intakeMotor.setDefaultCommand(new IntakeMotorCommand());
     feeder.setDefaultCommand(new FeederCommand());
     shooter.setDefaultCommand(new ShooterCommand());
+
+    configureButtonBindings();
+    displayChoices();
   }
 
   /**
@@ -74,8 +80,11 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public void displayChoices(){
+    autonCommandChooser.setDefaultOption("Auton", new Practice(2));
+  }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return autonCommandChooser.getSelected();
   }
 }
