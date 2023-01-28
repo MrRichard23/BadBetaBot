@@ -22,11 +22,15 @@ public class ShooterCommand extends CommandBase{
     }
 
     public void execute() {
+
+        System.out.println(shooter.displayShooterVal());
+
+       
         newleftBumper = Operator.getYButton();
 
         toggleleftBumper = Logic.justPressedLogic(newleftBumper, oldleftBumper);
 
-        alternateleftBumper = Logic.justPressedMultiToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper, 5);
+        alternateleftBumper = Logic.justPressedMultiToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper, 2);
 
         newStartButton = Operator.getStartButton();
 
@@ -39,28 +43,39 @@ public class ShooterCommand extends CommandBase{
             shooter.setShooter(0);
             alternateleftBumper = 1;
         }
+       
         else{
-            System.out.println(alternateleftBumper);
             if(toggleleftBumper == true){
                 if(alternateleftBumper == 1){
                     shooter.setShooter(0);
                 }
                 else if(alternateleftBumper == 2){
-                    shooter.setShooter(0.50);
-                }
-                else if(alternateleftBumper == 3){
-                    shooter.setShooter(0.60);
-                }
-                else if(alternateleftBumper == 4){
-                    shooter.setShooter(0.70);
-                }
-                else if(alternateleftBumper == 5){
-                    shooter.setShooter(0.80);
+                    shooter.setShooterPID(-550); //keep this value!! -550 is best suited for the velocity of the shooter
                 }
             }
+            // System.out.println(alternateleftBumper);
+            // if(toggleleftBumper == true){
+            //     if(alternateleftBumper == 1){
+            //         shooter.setShooterPID(0);
+            //     }
+            //     else if(alternateleftBumper == 2){
+            //         shooter.setShooterPID(0.5);
+            //     }
+            //     else if(alternateleftBumper == 3){
+            //         shooter.setShooterPID(0.60);
+            //     }
+            //     else if(alternateleftBumper == 4){
+            //         shooter.setShooterPID(0.70);
+            //     }
+            //     else if(alternateleftBumper == 5){
+            //         shooter.setShooterPID(0.780);
+            //     }
+            // }
         }
         oldleftBumper = newleftBumper;
 
         oldStartButton = newStartButton;
     }
 }
+
+
