@@ -81,7 +81,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public void displayChoices(){
-    autonCommandChooser.setDefaultOption("Auton", new Practice(5));
+    autonCommandChooser.setDefaultOption("Auton", new Practice(6));
   }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

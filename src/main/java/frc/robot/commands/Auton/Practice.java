@@ -21,9 +21,10 @@ public final class Practice extends CommandBase{
     private double drivetrainspeed = 0.15;
     private double time0 = 0;
     private double time1 = time0 + 1;
-    private double time2 = time1 + 1;
+    private double time2 = time1 + 0.25;
     private double time3 = time2 + 1;
-    private double time4 = time3 + 1;
+    private double time4 = time3 + 4.4;
+    private double time5 = time4 + 1;
 
     public Practice(double time){
         timer = new Timer();
@@ -44,57 +45,36 @@ public final class Practice extends CommandBase{
     }
 
     public void execute() {
-        if(timer.get() == time0){
+        if(timer.get() < time1){
             drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
             drivetrain.setUnlimitedRightDrive(drivetrainspeed);
             intake.setIntake(true);
             intakeMotor.setIntakeMotor(1);
             feeder.setLowerFeeder(1);
         }
-        else if(timer.get() == time1){
-            shooter.setShooter(0.75);
+        else if((timer.get()) < time2 && timer.get() > time1){
             drivetrain.setStop();
         }
-        else if(timer.get() == time2){
+        else if(timer.get() > time2 && timer.get() < time3){
             drivetrain.setUnlimitedLeftDrive(-drivetrainspeed);
             drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
             intake.setIntake(false);
             intakeMotor.setIntakeMotor(0);
         }
-        else if(timer.get() == time3){
-            drivetrain.setStop();
+        else if(timer.get() > time3 && timer.get() < time4){
+            drivetrain.setUnlimitedLeftDrive(-drivetrainspeed);
+            drivetrain.setUnlimitedRightDrive(drivetrainspeed);
             feeder.setLowerFeeder(0);
+            shooter.setShooter(0.75);
+        }
+        else if(timer.get() > time4 && timer.get() < time5){
+            drivetrain.setStop();
             feeder.setUpperFeeder(1);
         }
-        else if(timer.get() == time4){
+        else if(timer.get() > time5){
             feeder.setUpperFeeder(0);
+            shooter.setShooter(0);
         }
-
-        // if(timer.get() < time1){
-        //     drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
-        //     drivetrain.setUnlimitedRightDrive(drivetrainspeed);
-        //     intake.setIntake(true);
-        //     intakeMotor.setIntakeMotor(1);
-        //     feeder.setLowerFeeder(1);
-        // }
-        // else if((timer.get()) < time2 && timer.get() > time1){
-        //     shooter.setShooter(0.75);
-        //     drivetrain.setStop();
-        // }
-        // else if(timer.get() > time2 && timer.get() < time3){
-        //     drivetrain.setUnlimitedLeftDrive(-drivetrainspeed);
-        //     drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
-        //     intake.setIntake(false);
-        //     intakeMotor.setIntakeMotor(0);
-        // }
-        // else if(timer.get() > time3 && timer.get() < time4){
-        //     drivetrain.setStop();
-        //     feeder.setLowerFeeder(0);
-        //     feeder.setUpperFeeder(1);
-        // }
-        // else if(timer.get() > time4){
-        //     feeder.setUpperFeeder(0);
-        // }
     }
 
     public void end(boolean interrupted) {

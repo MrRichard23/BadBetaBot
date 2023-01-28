@@ -46,16 +46,16 @@ public class ShooterCommand extends CommandBase{
                     shooter.setShooter(0);
                 }
                 else if(alternateleftBumper == 2){
-                    shooter.setShooter(0.25);
-                }
-                else if(alternateleftBumper == 3){
                     shooter.setShooter(0.50);
                 }
+                else if(alternateleftBumper == 3){
+                    shooter.setShooter(0.60);
+                }
                 else if(alternateleftBumper == 4){
-                    shooter.setShooter(0.75);
+                    shooter.setShooter(0.70);
                 }
                 else if(alternateleftBumper == 5){
-                    shooter.setShooter(1);
+                    shooter.setShooter(0.80);
                 }
             }
         }
