@@ -22,9 +22,6 @@ public class ShooterCommand extends CommandBase{
     }
 
     public void execute() {
-
-        System.out.println(shooter.displayShooterVal());
-
         newButton1 = Operator.getYButton();
 
         pressedButton1 = Operator.getXboxController().getYButtonPressed();
@@ -54,23 +51,22 @@ public class ShooterCommand extends CommandBase{
                     shooter.setShooterPID(-550); //keep this value!! -550 is best suited for the velocity of the shooter
                 }
             }
-
             // System.out.println(alternateButton1);
-            // if(pressedButton1 == true){
+            // if(toggleButton1 == true){
             //     if(alternateButton1 == 1){
-            //         shooter.setShooterPID(0);
+            //         shooter.setShooter(0);
             //     }
             //     else if(alternateButton1 == 2){
-            //         shooter.setShooterPID(0.5);
+            //         shooter.setShooter(0.50);
             //     }
             //     else if(alternateButton1 == 3){
-            //         shooter.setShooterPID(0.60);
+            //         shooter.setShooter(0.60);
             //     }
             //     else if(alternateButton1 == 4){
-            //         shooter.setShooterPID(0.70);
+            //         shooter.setShooter(0.70);
             //     }
             //     else if(alternateButton1 == 5){
-            //         shooter.setShooterPID(0.780);
+            //         shooter.setShooter(0.80);
             //     }
             // }
         }

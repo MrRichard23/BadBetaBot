@@ -10,16 +10,13 @@ public class Shooter extends SubsystemBase{
     
     private static Shooter shooter;
     private CANSparkMax shooterMotor;
-    // private PIDController shooterController;
+// private PIDController shooterController;
     private double kf = (5676.0*42.0)/60.0; // (RPM * Ticks per revolution)/ minutes to second
 
     
     private Shooter(){
         shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
-        // shooterController =  new PIDController(0.0125, 0, 0); //good kp value for desired velocity
-    
-
-
+        // shooterController =  new PIDController(0.0125, 0, 0);
     }
 
     public static Shooter getInstance() {
