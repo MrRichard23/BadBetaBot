@@ -7,19 +7,19 @@ import frc.robot.Logic;
 public class FeederCommand extends CommandBase{
     Feeder feeder;
 
-    private boolean oldLeftBumper = true;
-    private boolean newLeftBumper = false;
-    private boolean toggleLeftBumper = false;
-    private boolean alternateLeftBumper = false;
+    private boolean oldButton1 = true;    //Left bumper
+    private boolean newButton1 = false;
+    private boolean pressedButton1 = false;
+    private boolean alternateButton1 = false;
 
-    private boolean oldRightBumper = true;
-    private boolean newRightBumper = false;
-    private boolean toggleRightBumper = false;
-    private boolean alternateRightBumper = false;
+    private boolean oldButton2 = true;    //Right bumper
+    private boolean newButton2 = false;
+    private boolean pressedButton2 = false;
+    private boolean alternateButton2 = false;
 
     private boolean newStartButton = false;
     private boolean oldStartButton = false;
-    private boolean toggleStartButton = false;
+    private boolean unPressedStartButton = false;
 
     public FeederCommand() {
         feeder = Feeder.getInstance();
@@ -27,51 +27,55 @@ public class FeederCommand extends CommandBase{
     }
 
     public void execute() {
-        newLeftBumper = Operator.getLeftBumper();
+        newButton1 = Operator.getLeftBumper();
 
-        toggleLeftBumper = Logic.justPressedLogic(newLeftBumper, oldLeftBumper);
+        pressedButton1 = Operator.getXboxController().getLeftBumperPressed();
 
-        alternateLeftBumper = Logic.justPressed2ToggleLogic(newLeftBumper, oldLeftBumper, alternateLeftBumper);
+        alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
 
-        newRightBumper = Operator.getRightBumper();
+        newButton2 = Operator.getRightBumper();
 
-        toggleRightBumper = Logic.justPressedLogic(newRightBumper, oldRightBumper);
+        pressedButton2 = Operator.getXboxController().getRightBumperPressed();
 
-        alternateRightBumper = Logic.justPressed2ToggleLogic(newRightBumper, oldRightBumper, alternateRightBumper);
+        alternateButton2 = Logic.pressed2ToggleLogic(pressedButton2, alternateButton2);
 
         newStartButton = Operator.getStartButton();
 
-        toggleStartButton = Logic.justUnPressedLogic(newStartButton, oldStartButton);
+        // unPressedStartButton = Operator.getXboxController().getStartButtonReleased();
+
+        unPressedStartButton = Logic.unPressedLogic(newStartButton, oldStartButton);
 
         if(newStartButton == true){
             feeder.setUpperFeeder(-1);
             feeder.setLowerFeeder(-1);
         }
-        else if(toggleStartButton == true){
+        else if(unPressedStartButton == true){
             feeder.setUpperFeeder(0);
             feeder.setLowerFeeder(0);
+            alternateButton1 = false;
+            alternateButton2 = false;
         }
         else{
-            if(toggleRightBumper == true){
-                if(alternateRightBumper == true){
-                    feeder.setUpperFeeder(1);
-                }
-                else{
-                    feeder.setUpperFeeder(0);
-                }
-            }
-            if(toggleLeftBumper == true){
-                if(alternateLeftBumper == true){
+            if(pressedButton1 == true){
+                if(alternateButton1 == true){
                     feeder.setLowerFeeder(1);
                 }
                 else{
                     feeder.setLowerFeeder(0);
                 }
             }
+            if(pressedButton2 == true){
+                if(alternateButton2 == true){
+                    feeder.setUpperFeeder(1);
+                }
+                else{
+                    feeder.setUpperFeeder(0);
+                }
+            }
         }
-        oldLeftBumper = newLeftBumper;
+        oldButton1 = newButton1;
 
-        oldRightBumper = newRightBumper;
+        oldButton2 = newButton2;
         
         oldStartButton = newStartButton;
     }

@@ -8,9 +8,16 @@ public class DrivetrainCommand extends CommandBase{
   /** Creates a new Easy. */
   Drivetrain drivetrain;
 
-  private boolean oldLTrigger = true;
-  private boolean newLTrigger = false;
-  private boolean alternateLTrigger = false;
+  private boolean oldButton1 = true;  //Right trigger
+  private boolean newButton1 = false;
+  private boolean pressedButton1 = false;
+  private boolean alternateButton1 = false;
+
+  private boolean oldButton2 = true;  //Left trigger
+  private boolean newButton2 = false;
+  private boolean pressedButton2 = false;
+  private boolean alternateButton2 = false;
+  
   public DrivetrainCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrain = Drivetrain.getInstance();   
@@ -24,26 +31,38 @@ public class DrivetrainCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    newLTrigger = Operator.getLeftTrigger();
+    newButton1 = Operator.getRightTrigger();
+
+    pressedButton1 = Operator.getRightJoystick().getTriggerPressed();
+
+    alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
+
+    newButton2 = Operator.getLeftTrigger();
+
+    pressedButton2 = Operator.getLeftJoystick().getTriggerPressed();
     
-    alternateLTrigger = Logic.justPressed2ToggleLogic(newLTrigger, oldLTrigger, alternateLTrigger);
+    alternateButton2 = Logic.pressed2ToggleLogic(pressedButton2, alternateButton2);
 
     if(Operator.getRightTrigger() == true){
       drivetrain.setLeftDrive(0);
       drivetrain.setRightDrive(0);
+      alternateButton1 = false;
+    }
+    else if(alternateButton1 == true){
+      
     }
     else{
-      if(alternateLTrigger == false){
-        drivetrain.setLeftDrive(Operator.getLeftJoystick());
-        drivetrain.setRightDrive(Operator.getRightJoystick());
+      if(alternateButton2 == false){
+        drivetrain.setLeftDrive(Operator.getLeftJoystickY());
+        drivetrain.setRightDrive(Operator.getRightJoystickY());
       }
       else{
-        drivetrain.setLeftDrive(-Operator.getRightJoystick());
-        drivetrain.setRightDrive(-Operator.getLeftJoystick());
+        drivetrain.setLeftDrive(-Operator.getRightJoystickY());
+        drivetrain.setRightDrive(-Operator.getLeftJoystickY());
       }
     }
 
-    oldLTrigger = newLTrigger;
+    oldButton2 = newButton2;
   }
 
   // Called once the command ends or is interrupted.

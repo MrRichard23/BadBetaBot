@@ -7,10 +7,10 @@ import frc.robot.Logic;
 public class IntakeCommand extends CommandBase{
     Intake intake;
 
-    private boolean oldAButton = true;
-    private boolean newAButton = false;
-    private boolean toggleAButton = false;
-    private boolean alternateAButton = false;
+    private boolean oldButton1 = true;  //A button
+    private boolean newButton1 = false;
+    private boolean pressedButton1 = false;
+    private boolean alternateButton1 = false;
 
     public IntakeCommand() {
         intake = Intake.getInstance();
@@ -18,15 +18,15 @@ public class IntakeCommand extends CommandBase{
     }
 
     public void execute() {
-        newAButton = Operator.getAButton();
+        newButton1 = Operator.getAButton();
 
-        toggleAButton = Logic.justPressedLogic(newAButton, oldAButton);
+        pressedButton1 = Operator.getXboxController().getAButtonPressed();
 
-        alternateAButton = Logic.justPressed2ToggleLogic(newAButton, oldAButton, alternateAButton);
+        alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
 
-        if(toggleAButton == true){
-            intake.setIntake(alternateAButton);
+        if(pressedButton1 == true){
+            intake.setIntake(alternateButton1);
         }
-        oldAButton = newAButton;
+        oldButton1 = newButton1;
     }
 }

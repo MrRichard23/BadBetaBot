@@ -7,14 +7,14 @@ import frc.robot.Logic;
 public class IntakeMotorCommand extends CommandBase{
     IntakeMotor intakeMotor;
 
-    private boolean oldYButton = true;
-    private boolean newYButton = false;
-    private boolean toggleYButton = false;
-    private boolean alternateYButton = false;
+    private boolean oldButton1 = true;  //X button
+    private boolean newButton1 = false;
+    private boolean pressedButton1 = false;
+    private boolean alternateButton1 = false;
 
     private boolean newStartButton = false;
-    private boolean oldStartButton = false;
-    private boolean toggleStartButton = false;
+    // private boolean oldStartButton = false;
+    private boolean unPressedStartButton = false;
 
     public IntakeMotorCommand() {
         intakeMotor = IntakeMotor.getInstance();
@@ -22,25 +22,25 @@ public class IntakeMotorCommand extends CommandBase{
     }
 
     public void execute() {
-        newYButton = Operator.getXButton();
+        newButton1 = Operator.getXButton();
 
-        toggleYButton = Logic.justPressedLogic(newYButton, oldYButton);
+        pressedButton1 = Operator.getXboxController().getXButtonPressed();
 
-        alternateYButton = Logic.justPressed2ToggleLogic(newYButton, oldYButton, alternateYButton);
+        alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
 
         newStartButton = Operator.getStartButton();
 
-        toggleStartButton = Logic.justUnPressedLogic(newStartButton, oldStartButton);
+        unPressedStartButton = Operator.getXboxController().getStartButtonReleased();
 
         if(newStartButton == true){
             intakeMotor.setIntakeMotor(-1);
         }
-        else if(toggleStartButton == true){
+        else if(unPressedStartButton == true){
             intakeMotor.setIntakeMotor(0);
         }
         else{
-            if(toggleYButton == true){
-                if(alternateYButton == true){
+            if(pressedButton1 == true){
+                if(alternateButton1 == true){
                     intakeMotor.setIntakeMotor(0);
                 }
                 else{
@@ -48,8 +48,8 @@ public class IntakeMotorCommand extends CommandBase{
                 }
             }
         }
-        oldYButton = newYButton;
+        oldButton1 = newButton1;
 
-        oldStartButton = newStartButton;
+        // oldStartButton = newStartButton;
     }
 }

@@ -13,13 +13,23 @@ public class Operator{
         xboxController = new XboxController(Constants.XBOX_CONTROLLER_PORT);
     }
 
-    public static double getLeftJoystick() {
+    public static Joystick getLeftJoystick(){
+        return leftJoystick;
+    }
+    public static Joystick getRightJoystick(){
+        return rightJoystick;
+    }
+    public static XboxController getXboxController(){
+        return xboxController;
+    }
+
+    public static double getLeftJoystickY() {
         return leftJoystick.getY();
     }
     public static double getLeftThrottle() {
         return (1 - leftJoystick.getThrottle());
     }
-    public static double getRightJoystick() {
+    public static double getRightJoystickY() {
         return rightJoystick.getY();
     }
     public static double getRightThrottle() {

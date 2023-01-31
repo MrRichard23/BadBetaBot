@@ -1,7 +1,7 @@
 package frc.robot;
 
 public class Logic {
-    public static boolean justPressedLogic(boolean newInput, boolean oldInput){
+    public static boolean pressedLogic(boolean newInput, boolean oldInput){
         if(newInput == true && oldInput == false){
             return true;
         }
@@ -9,7 +9,7 @@ public class Logic {
             return false;
         }
     }
-    public static boolean justUnPressedLogic(boolean newInput, boolean oldInput){
+    public static boolean unPressedLogic(boolean newInput, boolean oldInput){
         if(newInput == false && oldInput == true){
             return true;
         }
@@ -17,8 +17,8 @@ public class Logic {
             return false;
         }
     }
-    public static boolean justPressed2ToggleLogic(boolean newInput, boolean oldInput, boolean oldAlternate){
-        if(newInput == true && oldInput == false){
+    public static boolean pressed2ToggleLogic(boolean pressed, boolean oldAlternate){
+        if(pressed == true){
             if(oldAlternate == true){
                 return false;
             }
@@ -30,9 +30,9 @@ public class Logic {
             return oldAlternate;
         }
     }
-    public static int justPressedMultiToggleLogic(boolean newInput, boolean oldInput, int oldAlternate, int numToggle){
-        if(newInput == true && oldInput == false){
-            if(oldAlternate < numToggle){
+    public static int pressedMultiToggleLogic(boolean pressed, int oldAlternate, int numPressed){
+        if(pressed == true){
+            if(oldAlternate < numPressed){
                 return (oldAlternate + 1);
             }
             else{

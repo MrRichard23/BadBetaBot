@@ -7,10 +7,10 @@ import frc.robot.Logic;
 public class ClimberCommand extends CommandBase{
     Climber climber;
 
-    private boolean oldBButton = true;
-    private boolean newBButton = false;
-    private boolean toggleBButton = false;
-    private boolean alternateBButton = false;
+    private boolean oldButton1 = true;    //B button
+    private boolean newButton1 = false;
+    private boolean pressedButton1 = false;
+    private boolean alternateButton1 = false;
 
     public ClimberCommand() {
         climber = Climber.getInstance();
@@ -18,15 +18,15 @@ public class ClimberCommand extends CommandBase{
     }
 
     public void execute() {
-        newBButton = Operator.getBButton();
+        newButton1 = Operator.getBButton();
 
-        toggleBButton = Logic.justPressedLogic(newBButton, oldBButton);
+        pressedButton1 = Operator.getXboxController().getBButtonPressed();
 
-        alternateBButton = Logic.justPressed2ToggleLogic(newBButton, oldBButton, alternateBButton);
+        alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
 
-        if(toggleBButton == true){
-            climber.setClimber(alternateBButton);
+        if(pressedButton1 == true){
+            climber.setClimber(alternateButton1);
         }
-        oldBButton = newBButton;
+        oldButton1 = newButton1;
     }
 }

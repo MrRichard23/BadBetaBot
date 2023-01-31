@@ -7,14 +7,14 @@ import frc.robot.Logic;
 public class ShooterCommand extends CommandBase{
     Shooter shooter;
 
-    private boolean oldleftBumper = false;
-    private boolean newleftBumper = false;
-    private boolean toggleleftBumper = false;
-    private int alternateleftBumper = 1;
+    private boolean oldButton1 = false;  //Y button
+    private boolean newButton1 = false;
+    private boolean pressedButton1 = false;
+    private int alternateButton1 = 1;
     
     private boolean newStartButton = false;
     private boolean oldStartButton = false;
-    private boolean toggleStartButton = false;
+    private boolean unPressedStartButton = false;
 
     public ShooterCommand() {
         shooter = Shooter.getInstance();
@@ -22,44 +22,59 @@ public class ShooterCommand extends CommandBase{
     }
 
     public void execute() {
-        newleftBumper = Operator.getYButton();
 
-        toggleleftBumper = Logic.justPressedLogic(newleftBumper, oldleftBumper);
+        System.out.println(shooter.displayShooterVal());
 
-        alternateleftBumper = Logic.justPressedMultiToggleLogic(newleftBumper, oldleftBumper, alternateleftBumper, 5);
+        newButton1 = Operator.getYButton();
+
+        pressedButton1 = Operator.getXboxController().getYButtonPressed();
+
+        alternateButton1 = Logic.pressedMultiToggleLogic(pressedButton1, alternateButton1, 2);
 
         newStartButton = Operator.getStartButton();
 
-        toggleStartButton = Logic.justUnPressedLogic(newStartButton, oldStartButton);
+        // unPressedStartButton = Operator.getXboxController().getStartButtonReleased();
+
+        unPressedStartButton = Logic.unPressedLogic(newStartButton, oldStartButton);
 
         if(newStartButton == true){
             shooter.setShooter(-1);
         }
-        else if(toggleStartButton == true){
+        else if(unPressedStartButton == true){
             shooter.setShooter(0);
-            alternateleftBumper = 1;
+            alternateButton1 = 1;
         }
+       
         else{
-            System.out.println(alternateleftBumper);
-            if(toggleleftBumper == true){
-                if(alternateleftBumper == 1){
+            if(pressedButton1 == true){
+                if(alternateButton1 == 1){
                     shooter.setShooter(0);
                 }
-                else if(alternateleftBumper == 2){
-                    shooter.setShooter(0.50);
-                }
-                else if(alternateleftBumper == 3){
-                    shooter.setShooter(0.60);
-                }
-                else if(alternateleftBumper == 4){
-                    shooter.setShooter(0.70);
-                }
-                else if(alternateleftBumper == 5){
-                    shooter.setShooter(0.80);
+                else if(alternateButton1 == 2){
+                    shooter.setShooterPID(-550); //keep this value!! -550 is best suited for the velocity of the shooter
                 }
             }
+
+            // System.out.println(alternateButton1);
+            // if(pressedButton1 == true){
+            //     if(alternateButton1 == 1){
+            //         shooter.setShooterPID(0);
+            //     }
+            //     else if(alternateButton1 == 2){
+            //         shooter.setShooterPID(0.5);
+            //     }
+            //     else if(alternateButton1 == 3){
+            //         shooter.setShooterPID(0.60);
+            //     }
+            //     else if(alternateButton1 == 4){
+            //         shooter.setShooterPID(0.70);
+            //     }
+            //     else if(alternateButton1 == 5){
+            //         shooter.setShooterPID(0.780);
+            //     }
+            // }
         }
-        oldleftBumper = newleftBumper;
+        oldButton1 = newButton1;
 
         oldStartButton = newStartButton;
     }
