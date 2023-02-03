@@ -6,9 +6,9 @@ import frc.robot.Logic;
 
 public class IntakeMotorCommand extends CommandBase{
     IntakeMotor intakeMotor;
-
-    private boolean oldButton1 = true;  //X button
-    private boolean newButton1 = false;
+  
+    private boolean newButton1 = false; //X button
+    private boolean oldButton1 = true;
     private boolean pressedButton1 = false;
     private boolean alternateButton1 = false;
 
@@ -22,14 +22,12 @@ public class IntakeMotorCommand extends CommandBase{
     }
 
     public void execute() {
+        oldButton1 = newButton1;
         newButton1 = Operator.getXButton();
-
         pressedButton1 = Operator.getXboxController().getXButtonPressed();
-
         alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
 
         newStartButton = Operator.getStartButton();
-
         unPressedStartButton = Operator.getXboxController().getStartButtonReleased();
 
         if(newStartButton == true){
@@ -48,8 +46,5 @@ public class IntakeMotorCommand extends CommandBase{
                 }
             }
         }
-        oldButton1 = newButton1;
-
-        // oldStartButton = newStartButton;
     }
 }

@@ -3,6 +3,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.Logic;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeMotor;
 import frc.robot.subsystems.Shooter;
@@ -17,6 +18,7 @@ public final class Practice extends CommandBase{
 
     private Timer timer = new Timer();
     private double time;
+    private double currentTime;
 
     private double drivetrainspeed = 0.15;
     private double time0 = 0;
@@ -25,6 +27,7 @@ public final class Practice extends CommandBase{
     private double time3 = time2 + 1;
     private double time4 = time3 + 4.4;
     private double time5 = time4 + 1;
+    private double time6 = time5 + 1;
 
     public Practice(double time){
         timer = new Timer();
@@ -45,33 +48,32 @@ public final class Practice extends CommandBase{
     }
 
     public void execute() {
-        if(timer.get() < time1){
-            drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(drivetrainspeed);
+        currentTime = timer.get();
+        if(Logic.lessGreater(time0, currentTime, time1)){
+            drivetrain.setUnlimitedAllDrive(drivetrainspeed);
             intake.setIntake(true);
             intakeMotor.setIntakeMotor(1);
             feeder.setLowerFeeder(1);
         }
-        else if((timer.get()) < time2 && timer.get() > time1){
+        else if(Logic.lessGreater(time1, currentTime, time2)){
             drivetrain.setStop();
         }
-        else if(timer.get() > time2 && timer.get() < time3){
-            drivetrain.setUnlimitedLeftDrive(-drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
+        else if(Logic.lessGreater(time2, currentTime, time3)){
+            drivetrain.setUnlimitedAllDrive(-drivetrainspeed);
             intake.setIntake(false);
             intakeMotor.setIntakeMotor(0);
         }
-        else if(timer.get() > time3 && timer.get() < time4){
+        else if(Logic.lessGreater(time3, currentTime, time4)){
             drivetrain.setUnlimitedLeftDrive(-drivetrainspeed);
             drivetrain.setUnlimitedRightDrive(drivetrainspeed);
             feeder.setLowerFeeder(0);
             shooter.setShooter(0.75);
         }
-        else if(timer.get() > time4 && timer.get() < time5){
+        else if(Logic.lessGreater(time4, currentTime, time5)){
             drivetrain.setStop();
             feeder.setUpperFeeder(1);
         }
-        else if(timer.get() > time5){
+        else if(Logic.lessGreater(time5, currentTime, time6)){
             feeder.setUpperFeeder(0);
             shooter.setShooter(0);
         }

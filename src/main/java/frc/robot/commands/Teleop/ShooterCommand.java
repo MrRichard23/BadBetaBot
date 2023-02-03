@@ -6,9 +6,9 @@ import frc.robot.Logic;
 
 public class ShooterCommand extends CommandBase{
     Shooter shooter;
-
-    private boolean oldButton1 = false;  //Y button
-    private boolean newButton1 = false;
+  
+    private boolean newButton1 = false; //Y button
+    private boolean oldButton1 = false;
     private boolean pressedButton1 = false;
     private int alternateButton1 = 1;
     
@@ -22,16 +22,14 @@ public class ShooterCommand extends CommandBase{
     }
 
     public void execute() {
+        oldButton1 = newButton1;
         newButton1 = Operator.getYButton();
-
         pressedButton1 = Operator.getXboxController().getYButtonPressed();
-
         alternateButton1 = Logic.pressedMultiToggleLogic(pressedButton1, alternateButton1, 2);
 
+        oldStartButton = newStartButton;
         newStartButton = Operator.getStartButton();
-
         // unPressedStartButton = Operator.getXboxController().getStartButtonReleased();
-
         unPressedStartButton = Logic.unPressedLogic(newStartButton, oldStartButton);
 
         if(newStartButton == true){
@@ -70,8 +68,5 @@ public class ShooterCommand extends CommandBase{
             //     }
             // }
         }
-        oldButton1 = newButton1;
-
-        oldStartButton = newStartButton;
     }
 }

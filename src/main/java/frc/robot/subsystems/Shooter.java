@@ -10,7 +10,7 @@ public class Shooter extends SubsystemBase{
     
     private static Shooter shooter;
     private CANSparkMax shooterMotor;
-// private PIDController shooterController;
+    private PIDController shooterController;
     private double kf = (5676.0*42.0)/60.0; // (RPM * Ticks per revolution)/ minutes to second
 
     

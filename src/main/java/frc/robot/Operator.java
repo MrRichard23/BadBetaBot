@@ -1,5 +1,6 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Operator{
@@ -23,17 +24,21 @@ public class Operator{
         return xboxController;
     }
 
+    public static void SmartDashboard1(double input, String message){
+        SmartDashboard.putNumber(message, input);
+    }
+
     public static double getLeftJoystickY() {
         return leftJoystick.getY();
     }
     public static double getLeftThrottle() {
-        return (1 - leftJoystick.getThrottle());
+        return (0.5 * (1 - leftJoystick.getThrottle()));
     }
     public static double getRightJoystickY() {
         return rightJoystick.getY();
     }
     public static double getRightThrottle() {
-        return (1 - rightJoystick.getThrottle());
+        return (0.5 * (1 - rightJoystick.getThrottle()));
     }
     public static boolean getLeftTrigger() {
         return leftJoystick.getTrigger();

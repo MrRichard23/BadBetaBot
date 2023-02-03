@@ -22,6 +22,7 @@ import frc.robot.subsystems.Feeder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.commands.Auton.Practice;
+import frc.robot.commands.Auton.Square;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -81,7 +82,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public void displayChoices(){
-    autonCommandChooser.setDefaultOption("Auton", new Practice(6));
+    autonCommandChooser.setDefaultOption("Practice", new Practice(9));
+    autonCommandChooser.addOption("Square", new Square(22));
   }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

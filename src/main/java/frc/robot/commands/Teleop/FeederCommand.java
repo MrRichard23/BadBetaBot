@@ -7,13 +7,13 @@ import frc.robot.Logic;
 public class FeederCommand extends CommandBase{
     Feeder feeder;
 
-    private boolean oldButton1 = true;    //Left bumper
-    private boolean newButton1 = false;
+    private boolean newButton1 = false; //Left bumper
+    private boolean oldButton1 = true;
     private boolean pressedButton1 = false;
     private boolean alternateButton1 = false;
 
-    private boolean oldButton2 = true;    //Right bumper
-    private boolean newButton2 = false;
+    private boolean newButton2 = false; //Right bumper
+    private boolean oldButton2 = true;
     private boolean pressedButton2 = false;
     private boolean alternateButton2 = false;
 
@@ -27,22 +27,19 @@ public class FeederCommand extends CommandBase{
     }
 
     public void execute() {
+        oldButton1 = newButton1;
         newButton1 = Operator.getLeftBumper();
-
         pressedButton1 = Operator.getXboxController().getLeftBumperPressed();
-
         alternateButton1 = Logic.pressed2ToggleLogic(pressedButton1, alternateButton1);
 
+        oldButton2 = newButton2;
         newButton2 = Operator.getRightBumper();
-
         pressedButton2 = Operator.getXboxController().getRightBumperPressed();
-
         alternateButton2 = Logic.pressed2ToggleLogic(pressedButton2, alternateButton2);
 
+        oldStartButton = newStartButton;
         newStartButton = Operator.getStartButton();
-
         // unPressedStartButton = Operator.getXboxController().getStartButtonReleased();
-
         unPressedStartButton = Logic.unPressedLogic(newStartButton, oldStartButton);
 
         if(newStartButton == true){
@@ -73,10 +70,5 @@ public class FeederCommand extends CommandBase{
                 }
             }
         }
-        oldButton1 = newButton1;
-
-        oldButton2 = newButton2;
-        
-        oldStartButton = newStartButton;
     }
 }
