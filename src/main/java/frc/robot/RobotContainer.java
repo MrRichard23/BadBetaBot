@@ -84,6 +84,9 @@ public class RobotContainer {
   public void displayChoices(){
     autonCommandChooser.setDefaultOption("Practice", new Practice(9));
     autonCommandChooser.addOption("Square", new Square(22));
+
+    SmartDashboard.putData("auto choooser", autonCommandChooser);
+
   }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

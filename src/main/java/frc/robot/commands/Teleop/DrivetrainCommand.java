@@ -31,6 +31,8 @@ public class DrivetrainCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    Operator.SmartDashboard1(Operator.getLeftThrottle(), "Sensitivity");
+
     oldButton1 = newButton1;
     newButton1 = Operator.getRightTrigger();
     pressedButton1 = Operator.getRightJoystick().getTriggerPressed();
