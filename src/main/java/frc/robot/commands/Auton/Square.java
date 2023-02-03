@@ -17,7 +17,7 @@ public class Square extends CommandBase{
 
     private double drivetrainspeed = 0.15;
     private double forewardTime = 1;
-    private double turn90 = 2.2;
+    private double turn90 = 1.95;
     private double time0 = 0;
     private double time1 = time0 + forewardTime;
     private double time2 = time1 + turn90;

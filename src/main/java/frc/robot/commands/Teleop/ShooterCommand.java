@@ -22,6 +22,10 @@ public class ShooterCommand extends CommandBase{
     }
 
     public void execute() {
+
+        System.out.println(shooter.displayShooterVal());
+
+       
         oldButton1 = newButton1;
         newButton1 = Operator.getYButton();
         pressedButton1 = Operator.getXboxController().getYButtonPressed();
@@ -70,3 +74,5 @@ public class ShooterCommand extends CommandBase{
         }
     }
 }
+
+
