@@ -51,4 +51,15 @@ public class Logic {
         return false;
        }
     }
+    public static int plusNeg(double input){
+        if(input < 0){
+            return -1;
+        }
+        else if(input == 0){
+            return 0;
+        }
+        else{
+            return 1;
+        }
+    }
 }

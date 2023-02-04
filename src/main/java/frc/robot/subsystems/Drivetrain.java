@@ -17,9 +17,13 @@ public class Drivetrain extends SubsystemBase{
     private TalonFX followLeftTalon;
     private TalonFX followRightTalon;
 
-    private double proportional = 0.175;
+    // private double proportional = 0.03;
+    // private double integration = 0.001;
+    // private double derivative = 0.;
+
+    private double proportional = 0.01;
     private double integration = 0;
-    private double derivative = 0;
+    private double derivative = -0.00008;  //-0.0001
     
     private Drivetrain() {
         masterLeftTalon = new TalonFX(Constants.MASTER_LEFT_TALON_PORT);
@@ -46,7 +50,7 @@ public class Drivetrain extends SubsystemBase{
         return drivetrain;
     }
     public void setLeftDrive(double speed) {
-        System.out.println(Operator.getLeftThrottle());
+        //System.out.println(Operator.getLeftThrottle());
         masterLeftTalon.set(ControlMode.PercentOutput, -speed * Operator.getLeftThrottle());
     }
     public void setRightDrive(double speed) {
@@ -73,5 +77,15 @@ public class Drivetrain extends SubsystemBase{
     public void setStopPIDDrivetrain(){
         masterLeftTalon.set(ControlMode.Velocity, 0);
         masterRightTalon.set(ControlMode.Velocity, 0);
+    }
+    public void setStillDrivetrain(){
+        PIDController pidController = new PIDController(proportional, integration, derivative);
+
+        masterLeftTalon.set(ControlMode.PercentOutput, 
+        pidController.calculate(-Operator.getPitch(),0)
+        );
+        masterRightTalon.set(ControlMode.PercentOutput, 
+        pidController.calculate(Operator.getPitch(),0)
+        );
     }
 }

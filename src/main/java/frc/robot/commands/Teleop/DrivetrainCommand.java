@@ -17,6 +17,9 @@ public class DrivetrainCommand extends CommandBase{
   private boolean oldButton2 = true;
   private boolean pressedButton2 = false;
   private boolean alternateButton2 = false;
+
+  private double autoDriveTrainSpeed = 0.015;
+  private double autoDriveTrainSlowSpeed = 0.08;
   
   public DrivetrainCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,6 +35,12 @@ public class DrivetrainCommand extends CommandBase{
   @Override
   public void execute() {
     Operator.SmartDashboard1(Operator.getLeftThrottle(), "Sensitivity");
+    Operator.SmartDashboard2(Operator.getPitch(), "Pitch");
+    Operator.SmartDashboard3(Operator.getRoll(), "Roll");
+    Operator.SmartDashboard4(Operator.getYaw(), "Yaw");
+    Operator.SmartDashboard5(Operator.getXVelocity(), "X Velocity");
+    Operator.SmartDashboard6(Operator.getYVelocity(), "Y Velocity");
+    Operator.SmartDashboard7(Operator.getZVelocity(), "Z Velocity");
 
     oldButton1 = newButton1;
     newButton1 = Operator.getRightTrigger();
@@ -44,9 +53,16 @@ public class DrivetrainCommand extends CommandBase{
     alternateButton2 = Logic.pressed2ToggleLogic(pressedButton2, alternateButton2);
 
     if(newButton1 == true){
-      drivetrain.setStopPIDDrivetrain();
+      // drivetrain.setStopPIDDrivetrain();
+      if(Logic.lessGreater(-10, Operator.getPitch(), 10)){
+        drivetrain.setStillDrivetrain();
+      }
+      else{
+        drivetrain.setUnlimitedAllDrive(-0.1 * Logic.plusNeg(Operator.getPitch()));
+      }
     }
     else{
+
       if(alternateButton2 == false){
         drivetrain.setLeftDrive(Operator.getLeftJoystickY());
         drivetrain.setRightDrive(Operator.getRightJoystickY());

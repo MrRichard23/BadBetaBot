@@ -98,7 +98,7 @@ public class Operator{
         return ahrs.getRoll();
     }
     public static float getPitch(){
-        return ahrs.getPitch();
+        return (ahrs.getPitch() - 5.3f);
     }
     public static double getYaw(){
         return ahrs.getYaw();
