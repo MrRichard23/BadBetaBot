@@ -18,6 +18,18 @@ public class DrivetrainCommand extends CommandBase{
   private boolean pressedButton2 = false;
   private boolean alternateButton2 = false;
 
+  private boolean newButton3 = false; //Right side button
+  private boolean oldButton3 = true;
+  private boolean pressedButton3 = false;
+  private boolean alternateButton3 = false;
+
+  private boolean newButton4 = false; //Right button 3
+  private boolean oldButton4 = true;
+  private boolean pressedButton4= false;
+  private boolean alternateButton4 = false;
+
+  private int littlePitch;
+
   private double autoDriveTrainSpeed = 0.015;
   private double autoDriveTrainSlowSpeed = 0.08;
   
@@ -52,18 +64,50 @@ public class DrivetrainCommand extends CommandBase{
     pressedButton2 = Operator.getLeftJoystick().getTriggerPressed();
     alternateButton2 = Logic.pressed2ToggleLogic(pressedButton2, alternateButton2);
 
-    if(newButton1 == true){
-      // drivetrain.setStopPIDDrivetrain();
-      if(Logic.lessGreater(-10, Operator.getPitch(), 10)){
-        drivetrain.setStillDrivetrain();
+    oldButton3 = newButton3;
+    newButton3 = Operator.getRightButton2();
+    pressedButton3 = Logic.pressedLogic(newButton3, oldButton3);
+    alternateButton3 = Logic.pressed2ToggleLogic(pressedButton3, alternateButton3);
+
+    oldButton4 = newButton4;
+    newButton4 = Operator.getRightButton3();
+    pressedButton4 = Logic.pressedLogic(newButton4, oldButton4);
+    alternateButton4 = Logic.pressed2ToggleLogic(pressedButton4, alternateButton4);
+
+    if(Logic.lessGreater(-3, Operator.getPitch(), 3)){
+      littlePitch++;
+    }
+    else{
+      littlePitch = 0;
+    }
+
+    if(alternateButton3 == true){
+      drivetrain.setStopPID();
+      alternateButton1 = false;
+    }
+    else if(newButton4 == true){
+      if(Operator.getRoll() < 0){
+        drivetrain.setUnlimitedLeftDrive(-0.1);
+        drivetrain.setUnlimitedRightDrive(0.1);
       }
       else{
-        drivetrain.setUnlimitedAllDrive(-0.1 * Logic.plusNeg(Operator.getPitch()));
+        drivetrain.setUnlimitedLeftDrive(0.1);
+        drivetrain.setUnlimitedRightDrive(-0.1);
+      }
+    }
+    else if(alternateButton1 == true){
+      if(littlePitch > 25){
+        drivetrain.setStopPID();
+      }
+      else if(Logic.lessGreater(-15, Operator.getPitch(), 15)){
+        drivetrain.setBalanceDrivetrain();
+      }
+      else{
+        drivetrain.setUnlimitedAllDrive(-0.05 * Logic.plusNeg(Operator.getPitch()));
       }
     }
     else{
-
-      if(alternateButton2 == false){
+      if(alternateButton2 == true){
         drivetrain.setLeftDrive(Operator.getLeftJoystickY());
         drivetrain.setRightDrive(Operator.getRightJoystickY());
       }

@@ -44,12 +44,13 @@ public class Logic {
         }
     }
     public static boolean lessGreater(double beginTime, double currentTime, double endTime){
-       if(currentTime > beginTime && currentTime < endTime){
-        return true;
-       }
-       else{
-        return false;
-       }
+    //    if(currentTime > beginTime && currentTime < endTime){
+    //     return true;
+    //    }
+    //    else{
+    //     return false;
+    //    }
+        return (currentTime > beginTime && currentTime < endTime);
     }
     public static int plusNeg(double input){
         if(input < 0){

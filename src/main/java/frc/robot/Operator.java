@@ -19,7 +19,11 @@ public class Operator{
         rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_TALON_PORT);
         xboxController = new XboxController(Constants.XBOX_CONTROLLER_PORT);
         ahrs = new AHRS(SerialPort.Port.kMXP);
+
+        leftJoystick.getRawButton(0);
     }
+
+
 
     public static Joystick getLeftJoystick(){
         return leftJoystick;
@@ -71,6 +75,15 @@ public class Operator{
     public static boolean getRightTrigger() {
         return rightJoystick.getTrigger();
     }
+    public static boolean getLeftSideButton() {
+        return leftJoystick.getRawButton(2);
+    }
+    public static boolean getRightButton2() {
+        return rightJoystick.getRawButton(2);
+    }
+    public static boolean getRightButton3(){
+        return rightJoystick.getRawButton(3);
+    }
 
     public static boolean getAButton() {
         return xboxController.getAButton();
@@ -95,10 +108,10 @@ public class Operator{
     }
 
     public static float getRoll(){
-        return ahrs.getRoll();
+        return (ahrs.getRoll() + 2.5f);
     }
     public static float getPitch(){
-        return (ahrs.getPitch() - 5.3f);
+        return (ahrs.getPitch() - 4.8f);
     }
     public static double getYaw(){
         return ahrs.getYaw();

@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 public class Square extends CommandBase{
     Drivetrain drivetrain;
     
-    private Timer timer = new Timer();
+    private Timer timer;
     private double time;
     private double currentTime;
 
     private double drivetrainspeed = 0.15;
     private double forewardTime = 1;
-    private double turn90 = 1.95;
+    private double turn90 = 2.5;
     private double time0 = 0;
     private double time1 = time0 + forewardTime;
     private double time2 = time1 + turn90;
@@ -28,6 +28,11 @@ public class Square extends CommandBase{
     private double time7 = time6 + forewardTime;
     private double time8 = time7 + turn90;
     private double time9 = time8 + 1;
+
+    private double oldYaw = 0;
+    private double newYaw;
+
+    private double oldTime;
 
     public Square(double time){
         timer = new Timer();
@@ -44,37 +49,39 @@ public class Square extends CommandBase{
     }
 
     public void execute() {
+        newYaw = Operator.getYaw();
+
         currentTime = timer.get();
 
         Operator.SmartDashboard1(currentTime, "Time");
 
         if(Logic.lessGreater(time0, currentTime, time1)){
             drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time1, currentTime, time2)){
-            drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
+            drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time2, currentTime, time3)){
             drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time3, currentTime, time4)){
-            drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
+            drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time4, currentTime, time5)){
             drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time5, currentTime, time6)){
-            drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
+            drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time6, currentTime, time7)){
             drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time7, currentTime, time8)){
-            drivetrain.setUnlimitedLeftDrive(drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(-drivetrainspeed);
+            drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time8, currentTime, time9)){
             drivetrain.setStop();

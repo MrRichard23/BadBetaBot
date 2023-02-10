@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.commands.Auton.Practice;
 import frc.robot.commands.Auton.Square;
+import frc.robot.commands.Auton.TestSquare;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -74,7 +75,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -82,8 +84,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public void displayChoices(){
-    autonCommandChooser.setDefaultOption("Practice", new Practice(9));
+    autonCommandChooser.addOption("Practice", new Practice(9));
     autonCommandChooser.addOption("Square", new Square(22));
+    autonCommandChooser.addOption("TestSquare", new TestSquare());
 
     SmartDashboard.putData("auto choooser", autonCommandChooser);
 
