@@ -8,11 +8,22 @@ import edu.wpi.first.wpilibj.SerialPort;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 public class Operator{
     private static Joystick leftJoystick;
     private static Joystick rightJoystick;
     private static XboxController xboxController;
     private static AHRS ahrs;
+
+    private static NetworkTable table;
+
+    private static double v;
+    private static double x;
+    private static double y;
+    private static double a;
 
     public static void init() {
         leftJoystick = new Joystick(Constants.JOYSTICK_LEFT_TALON_PORT);
@@ -20,7 +31,7 @@ public class Operator{
         xboxController = new XboxController(Constants.XBOX_CONTROLLER_PORT);
         ahrs = new AHRS(SerialPort.Port.kMXP);
 
-        leftJoystick.getRawButton(0);
+        table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
 
@@ -33,6 +44,19 @@ public class Operator{
     }
     public static XboxController getXboxController(){
         return xboxController;
+    }
+
+    public static double cameraSee(){
+        return table.getEntry("tv").getDouble(0);
+    }
+    public static double cameraX(){
+        return table.getEntry("tx").getDouble(0);
+    }
+    public static double cameraY(){
+        return table.getEntry("ty").getDouble(0);
+    }
+    public static double cameraArea(){
+        return table.getEntry("ta").getDouble(0);
     }
 
     public static void SmartDashboard1(double input, String message){

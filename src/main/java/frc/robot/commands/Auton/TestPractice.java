@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Called.IntakeControl;
 import frc.robot.commands.Called.IntakeMotorControl;
+import frc.robot.commands.Called.LowerFeederControl;
+import frc.robot.commands.Called.ShooterControl;
 import frc.robot.commands.Called.TimedDrive;
 import frc.robot.commands.Called.Turn;
 import frc.robot.commands.Called.Wait;
@@ -24,13 +26,20 @@ public class TestPractice extends SequentialCommandGroup{
                                 new TimedDrive(0.15, 1),
                                 new InstantCommand(() -> Intake.getInstance().setIntake(true)),
                                 new IntakeControl(true),
-                                new IntakeMotorControl(1)
+                                new IntakeMotorControl(1),
+                                new LowerFeederControl(1)
                         ),
                         new Wait(0.25),
                         new ParallelCommandGroup(
-                                new TimedDrive(-0.15, 1)
+                                new TimedDrive(-0.15, 1),
+                                new IntakeControl(false),
+                                new IntakeMotorControl(0)
+                        ),
+                        new ParallelCommandGroup(
+                                new Turn(180),
+                                new LowerFeederControl(0),
+                                new ShooterControl(-550)
                         )
-                        // new Turn(-90)
 
                 )
         );

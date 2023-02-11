@@ -15,7 +15,11 @@ public class IntakeMotorControl extends CommandBase{
         addRequirements(intakeMotor);
     }
 
-    public void execute(){
+    public void initialize(){
         intakeMotor.setIntakeMotor(setting);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

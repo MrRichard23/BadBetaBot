@@ -36,10 +36,10 @@ public class Drivetrain extends SubsystemBase{
         followRightTalon.follow(masterRightTalon);
 
         turnPositionPIDController = new PIDController(0.017, 0, 0.0015);
-        turnPositionPIDController.setTolerance(1);
+        turnPositionPIDController.setTolerance(1,5);
         turnPositionPIDController.enableContinuousInput(-180.0f, 180.0f);
 
-        turnVelocityPIDController = new PIDController(0.0001, 0, 0);
+        // turnVelocityPIDController = new PIDController(0.0001, 0, 0);
 
         balancePIDController = new PIDController(0.008, 0.1, 0);
 
@@ -112,7 +112,7 @@ public class Drivetrain extends SubsystemBase{
         //     setpoint += 360;
         // }
         // setpoint %= 360;
-        double output = turnPositionPIDController.calculate(current, setpoint) + turnVelocityPIDController.calculate(masterLeftTalon.getSelectedSensorVelocity(), 0);
+        double output = turnPositionPIDController.calculate(current, setpoint); //+ turnVelocityPIDController.calculate(masterLeftTalon.getSelectedSensorVelocity(), 0);
         System.out.println(current + " current  " + setpoint + " setpoint");
         
         masterLeftTalon.set(ControlMode.PercentOutput, output);
@@ -120,7 +120,7 @@ public class Drivetrain extends SubsystemBase{
     }
 
      public boolean turnSetpoint(){
-        if(turnPositionPIDController.atSetpoint() && turnVelocityPIDController.atSetpoint()){
+        if(turnPositionPIDController.atSetpoint()){ //&& turnVelocityPIDController.atSetpoint()){
             return true;
         }
         else{

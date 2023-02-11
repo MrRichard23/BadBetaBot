@@ -15,7 +15,11 @@ public class LowerFeederControl extends CommandBase{
         addRequirements(feeder);
     }
 
-    public void execute(){
+    public void initialize(){
         feeder.setLowerFeeder(setting);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

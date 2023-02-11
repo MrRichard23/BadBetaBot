@@ -15,7 +15,11 @@ public class IntakeControl extends CommandBase{
         addRequirements(intake);
     }
 
-    public void execute(){
+    public void initialize(){
         intake.setIntake(setting);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

@@ -13,17 +13,6 @@ public class TestSquare extends SequentialCommandGroup {
     public TestSquare(){
         addCommands(
 
-<<<<<<< HEAD
-        new SequentialCommandGroup(
-            new TimedDrive(0.25, 1),
-            new Turn(-90),
-            new TimedDrive(0.15, 1),
-            new Turn(-90),
-            new TimedDrive(0.15, 1),
-            new Turn(-90),
-            new TimedDrive(0.15, 1),
-            new Turn(-90)
-=======
             new SequentialCommandGroup(
                 new TimedDrive(0.15, 1),
                 new Turn(-90),
@@ -34,7 +23,6 @@ public class TestSquare extends SequentialCommandGroup {
                 new TimedDrive(0.15, 1),
                 new Turn(-90)
             )
->>>>>>> 8eb24243592bcb7ecaf1fd4e179d7a21e0c833ca
         );
     }
 }

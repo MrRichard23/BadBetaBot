@@ -15,7 +15,11 @@ public class ClimberControl extends CommandBase{
         addRequirements(climber);
     }
 
-    public void execute(){
+    public void initialize(){
         climber.setClimber(setting);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }
