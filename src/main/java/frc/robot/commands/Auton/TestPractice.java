@@ -20,17 +20,17 @@ public class TestPractice extends SequentialCommandGroup{
     public TestPractice(){
         addCommands(
                 new SequentialCommandGroup(
-                        // new ParallelCommandGroup(
-                        //         new TimedDrive(0.15, 1),
-                        //         new InstantCommand(() -> Intake.getInstance().setIntake(true)),
-                        //         new IntakeControl(true),
-                        //         new IntakeMotorControl(1)
-                        // ),
-                        // new Wait(0.25),
-                        // new ParallelCommandGroup(
-                        //         new TimedDrive(-0.15, 1)
-                        // )
-                        new Turn(-90)
+                        new ParallelCommandGroup(
+                                new TimedDrive(0.15, 1),
+                                new InstantCommand(() -> Intake.getInstance().setIntake(true)),
+                                new IntakeControl(true),
+                                new IntakeMotorControl(1)
+                        ),
+                        new Wait(0.25),
+                        new ParallelCommandGroup(
+                                new TimedDrive(-0.15, 1)
+                        )
+                        // new Turn(-90)
 
                 )
         );
