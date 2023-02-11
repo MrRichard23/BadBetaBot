@@ -13,7 +13,7 @@ public class TestSquare extends SequentialCommandGroup {
         addCommands(new Turn(angle), new TimedDrive(speed, time));
 
         new SequentialCommandGroup(
-            new TimedDrive(0.15, 1),
+            new TimedDrive(0.25, 1),
             new Turn(-90),
             new TimedDrive(0.15, 1),
             new Turn(-90),
