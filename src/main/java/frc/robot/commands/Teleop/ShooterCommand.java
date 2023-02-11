@@ -23,7 +23,7 @@ public class ShooterCommand extends CommandBase{
 
     public void execute() {
 
-        System.out.println(shooter.displayShooterVal());
+        // System.out.println(shooter.displayShooterVal());
 
        
         oldButton1 = newButton1;

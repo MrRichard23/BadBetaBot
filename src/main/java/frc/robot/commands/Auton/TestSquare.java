@@ -1,4 +1,5 @@
 package frc.robot.commands.Auton;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Called.TimedDrive;
@@ -8,19 +9,20 @@ public class TestSquare extends SequentialCommandGroup {
     private double angle;
     private double speed;
     private double time;
-    
-    public TestSquare(){
-        addCommands(new Turn(angle), new TimedDrive(speed, time));
 
-        new SequentialCommandGroup(
-            new TimedDrive(0.15, 1),
-            new Turn(-90),
-            new TimedDrive(0.15, 1),
-            new Turn(-90),
-            new TimedDrive(0.15, 1),
-            new Turn(-90),
-            new TimedDrive(0.15, 1),
-            new Turn(-90)
+    public TestSquare(){
+        addCommands(
+
+            new SequentialCommandGroup(
+                new TimedDrive(0.15, 1),
+                new Turn(-90),
+                new TimedDrive(0.15, 1),
+                new Turn(-90),
+                new TimedDrive(0.15, 1),
+                new Turn(-90),
+                new TimedDrive(0.15, 1),
+                new Turn(-90)
+            )
         );
     }
 }
