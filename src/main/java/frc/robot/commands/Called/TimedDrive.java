@@ -13,9 +13,9 @@ public class TimedDrive extends CommandBase{
     private Timer timer;
 
     public TimedDrive(double speed, double time) {
+        drivetrain = Drivetrain.getInstance();
         this.speed = speed;
         this.time = time;
-        drivetrain = Drivetrain.getInstance();
         timer = new Timer();
 
         addRequirements(drivetrain);
@@ -27,7 +27,7 @@ public class TimedDrive extends CommandBase{
     }
 
     public void execute() {
-        drivetrain.setAllDrive(speed);
+        drivetrain.setUnlimitedAllDrive(speed);
     }
 
     public boolean isFinished() {

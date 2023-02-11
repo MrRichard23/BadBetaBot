@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().cancelAll();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -66,7 +67,15 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    Operator.SmartDashboard1(Operator.getLeftThrottle(), "Sensitivity");
+    Operator.SmartDashboard2(Operator.getPitch(), "Pitch");
+    Operator.SmartDashboard3(Operator.getRoll(), "Roll");
+    Operator.SmartDashboard4(Operator.getYaw(), "Yaw");
+    Operator.SmartDashboard5(Operator.getXVelocity(), "X Velocity");
+    Operator.SmartDashboard6(Operator.getYVelocity(), "Y Velocity");
+    Operator.SmartDashboard7(Operator.getZVelocity(), "Z Velocity");
+  }
 
   @Override
   public void teleopInit() {

@@ -27,7 +27,13 @@ public class Turn extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return drivetrain.turnSetpoint();
+        if(drivetrain.turnSetpoint()){
+            System.out.println("finished");
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public void end(boolean interupted){

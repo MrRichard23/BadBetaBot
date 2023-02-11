@@ -22,9 +22,9 @@ public class Drivetrain extends SubsystemBase{
     private double integration;
     private double derivative;
 
-    PIDController turnPIDController;
-
-    boolean firstGo = true;
+    PIDController turnPositionPIDController;
+    PIDController turnVelocityPIDController;
+    PIDController balancePIDController;
     
     private Drivetrain() {
         masterLeftTalon = new TalonFX(Constants.MASTER_LEFT_TALON_PORT);
@@ -35,7 +35,15 @@ public class Drivetrain extends SubsystemBase{
         followLeftTalon.follow(masterLeftTalon);
         followRightTalon.follow(masterRightTalon);
 
-        turnPIDController = new PIDController(0.005, 0, 0);
+        turnPositionPIDController = new PIDController(0.017, 0, 0.0015);
+        turnPositionPIDController.setTolerance(1);
+        turnPositionPIDController.enableContinuousInput(-180.0f, 180.0f);
+
+        turnVelocityPIDController = new PIDController(0.0001, 0, 0);
+
+        balancePIDController = new PIDController(0.008, 0.1, 0);
+
+
     }
 
     public static Drivetrain getInstance() {
@@ -86,26 +94,37 @@ public class Drivetrain extends SubsystemBase{
         masterRightTalon.set(ControlMode.Velocity, 0);
     }
     public void setBalanceDrivetrain(){
-        proportional = 0.008;   //0.008, 0.01, 0.0045
-        integration = 0.1;     //0.1
-        derivative = 0.000;  //0, 0,     -0.0003
-
-        PIDController pidController = new PIDController(proportional, integration, derivative);
-        // pidController.setTolerance(3);
-
-        masterLeftTalon.set(ControlMode.PercentOutput, 
-                pidController.calculate(-Operator.getPitch(),0));
+        double current = Operator.getPitch();
+         masterLeftTalon.set(ControlMode.PercentOutput, 
+                balancePIDController.calculate(-current,0));
         masterRightTalon.set(ControlMode.PercentOutput, 
-                pidController.calculate(Operator.getPitch(),0));
+                balancePIDController.calculate(current,0));
     }
     public void setTurnPID(double degrees, double oldYaw){
-        masterLeftTalon.set(ControlMode.PercentOutput, 
-                turnPIDController.calculate(Operator.getYaw(), (degrees + oldYaw)));
-        masterRightTalon.set(ControlMode.PercentOutput, 
-                turnPIDController.calculate(Operator.getYaw(), (degrees + oldYaw)));
+
+        double current =  Operator.getYaw();
+        double setpoint = degrees + oldYaw;
+        // double setpoint =((degrees + oldYaw + 180) % 360) - 180;
+        // if(setpoint - current > 180){
+        //     setpoint -= 360;
+        // }
+        // else if(setpoint - current < -180){
+        //     setpoint += 360;
+        // }
+        // setpoint %= 360;
+        double output = turnPositionPIDController.calculate(current, setpoint) + turnVelocityPIDController.calculate(masterLeftTalon.getSelectedSensorVelocity(), 0);
+        System.out.println(current + " current  " + setpoint + " setpoint");
+        
+        masterLeftTalon.set(ControlMode.PercentOutput, output);
+        masterRightTalon.set(ControlMode.PercentOutput, output);
     }
 
      public boolean turnSetpoint(){
-        return turnPIDController.atSetpoint();
-     }
+        if(turnPositionPIDController.atSetpoint() && turnVelocityPIDController.atSetpoint()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
