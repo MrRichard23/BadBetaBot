@@ -50,7 +50,7 @@ public final class Practice extends CommandBase{
     public void execute() {
         currentTime = timer.get();
         if(Logic.lessGreater(time0, currentTime, time1)){
-            drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            drivetrain.setFullAllDrive(drivetrainspeed);
             intake.setIntake(true);
             intakeMotor.setIntakeMotor(1);
             feeder.setLowerFeeder(1);
@@ -59,13 +59,13 @@ public final class Practice extends CommandBase{
             drivetrain.setStop();
         }
         else if(Logic.lessGreater(time2, currentTime, time3)){
-            drivetrain.setUnlimitedAllDrive(-drivetrainspeed);
+            drivetrain.setFullAllDrive(-drivetrainspeed);
             intake.setIntake(false);
             intakeMotor.setIntakeMotor(0);
         }
         else if(Logic.lessGreater(time3, currentTime, time4)){
-            drivetrain.setUnlimitedLeftDrive(-drivetrainspeed);
-            drivetrain.setUnlimitedRightDrive(drivetrainspeed);
+            drivetrain.setFullLeftDrive(-drivetrainspeed);
+            drivetrain.setFullRightDrive(drivetrainspeed);
             feeder.setLowerFeeder(0);
             shooter.setShooter(0.75);
         }

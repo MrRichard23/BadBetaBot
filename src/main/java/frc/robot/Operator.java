@@ -7,23 +7,18 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Operator{
+
     private static Joystick leftJoystick;
     private static Joystick rightJoystick;
     private static XboxController xboxController;
     private static AHRS ahrs;
 
     private static NetworkTable table;
-
-    private static double v;
-    private static double x;
-    private static double y;
-    private static double a;
 
     public static void init() {
         leftJoystick = new Joystick(Constants.JOYSTICK_LEFT_TALON_PORT);
@@ -80,7 +75,15 @@ public class Operator{
     public static void SmartDashboard7(double input, String message){
         SmartDashboard.putNumber(message, input);
     }
-
+    public static void SmartDashboard8(double input, String message){
+        SmartDashboard.putNumber(message, input);
+    }
+    public static void SmartDashboard9(double input, String message){
+        SmartDashboard.putNumber(message, input);
+    }
+    public static void SmartDashboard10(double input, String message){
+        SmartDashboard.putNumber(message, input);
+    }
     public static double getLeftJoystickY() {
         return leftJoystick.getY();
     }
@@ -131,6 +134,9 @@ public class Operator{
         return xboxController.getStartButton();
     }
 
+    public static AHRS ahrs(){
+        return ahrs;
+    }
     public static float getRoll(){
         return (ahrs.getRoll() + 2.5f);
     }

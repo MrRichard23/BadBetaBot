@@ -1,8 +1,14 @@
 package frc.robot.subsystems;
+import java.util.function.BiConsumer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,6 +31,11 @@ public class Drivetrain extends SubsystemBase{
     PIDController turnPositionPIDController;
     PIDController turnVelocityPIDController;
     PIDController balancePIDController;
+    PIDController cameraCenterPIDController;
+
+    private DifferentialDriveOdometry odometry;
+    private Pose2d pose2d;
+    public DifferentialDriveKinematics driveKinematics;
     
     private Drivetrain() {
         masterLeftTalon = new TalonFX(Constants.MASTER_LEFT_TALON_PORT);
@@ -35,6 +46,15 @@ public class Drivetrain extends SubsystemBase{
         followLeftTalon.follow(masterLeftTalon);
         followRightTalon.follow(masterRightTalon);
 
+        driveKinematics = new DifferentialDriveKinematics(0.8);
+
+        pose2d = new Pose2d();
+
+        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-Operator.ahrs().getYaw()), 
+        masterLeftTalon.getSelectedSensorPosition(), masterRightTalon.getSelectedSensorPosition(),
+                pose2d
+        );
+
         turnPositionPIDController = new PIDController(0.017, 0, 0.0015);
         turnPositionPIDController.setTolerance(1,5);
         turnPositionPIDController.enableContinuousInput(-180.0f, 180.0f);
@@ -43,7 +63,8 @@ public class Drivetrain extends SubsystemBase{
 
         balancePIDController = new PIDController(0.008, 0.1, 0);
 
-
+        cameraCenterPIDController = new PIDController(0.018,0,0.004); //0.012, 0, 0.003
+        cameraCenterPIDController.setTolerance(0.5, 2);
     }
 
     public static Drivetrain getInstance() {
@@ -52,6 +73,16 @@ public class Drivetrain extends SubsystemBase{
         }
         return drivetrain;
     }
+
+
+    public Pose2d getPose() {
+		return odometry.getPoseMeters();
+	}
+
+    public void resetPose(Pose2d pose) {
+		odometry.resetPosition(Operator.ahrs().getRotation2d(), masterLeftTalon.getSelectedSensorPosition(), masterRightTalon.getSelectedSensorPosition(), pose);
+	}
+
     public void setLeftDrive(double speed) {
         //System.out.println(Operator.getLeftThrottle());
         masterLeftTalon.set(ControlMode.PercentOutput, -speed * Operator.getLeftThrottle());
@@ -63,15 +94,24 @@ public class Drivetrain extends SubsystemBase{
         masterLeftTalon.set(ControlMode.PercentOutput, -speed * Operator.getLeftThrottle());
         masterRightTalon.set(ControlMode.PercentOutput, speed * Operator.getLeftThrottle());
     }
-    public void setUnlimitedLeftDrive(double speed) {
+    public void setFullLeftDrive(double speed) {
         masterLeftTalon.set(ControlMode.PercentOutput, -speed);
     }
-    public void setUnlimitedRightDrive(double speed) {
+    public void setFullRightDrive(double speed) {
         masterRightTalon.set(ControlMode.PercentOutput, speed);
     }
-    public void setUnlimitedAllDrive(double speed) {
+    public void setFullAllDrive(double speed) {
         masterLeftTalon.set(ControlMode.PercentOutput, -speed);
         masterRightTalon.set(ControlMode.PercentOutput, speed);
+    }
+    public void setDrive(double leftInput, double rightInput) {
+        
+        masterLeftTalon.set(ControlMode.PercentOutput, -leftInput * Operator.getLeftThrottle());
+        masterRightTalon.set(ControlMode.PercentOutput, rightInput * Operator.getLeftThrottle());
+    }
+    public void setFullDrive(double leftInput, double rightInput){
+        masterLeftTalon.set(ControlMode.PercentOutput, -leftInput);
+        masterRightTalon.set(ControlMode.PercentOutput, rightInput);
     }
     public void setStop() {
         masterRightTalon.set(ControlMode.PercentOutput, 0);
@@ -80,7 +120,7 @@ public class Drivetrain extends SubsystemBase{
     public void setStopPID(){
         proportional = 0.03;
         integration = 0.001;
-        derivative = 0.;
+        derivative = 0;
 
         masterLeftTalon.config_kP(0, proportional);
         masterLeftTalon.config_kI(0, integration);
@@ -92,6 +132,19 @@ public class Drivetrain extends SubsystemBase{
 
         masterLeftTalon.set(ControlMode.Velocity, 0);
         masterRightTalon.set(ControlMode.Velocity, 0);
+    }
+    public void setCameraCenter(){
+        double output = cameraCenterPIDController.calculate(Operator.cameraX(), 0);
+        masterLeftTalon.set(ControlMode.PercentOutput, -output);
+        masterRightTalon.set(ControlMode.PercentOutput, -output);
+    }
+    public boolean cameraCenterSetpoint(){
+        if(cameraCenterPIDController.atSetpoint()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public void setBalanceDrivetrain(){
         double current = Operator.getPitch();

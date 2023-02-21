@@ -1,13 +1,13 @@
-package frc.robot.commands.Called;
+package frc.robot.commands.Control;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
-public class LowerFeederControl extends CommandBase{
+public class UpperFeederControl extends CommandBase{
     Feeder feeder;
     private double setting;
 
-    public LowerFeederControl(double setting){
+    public UpperFeederControl(double setting){
         this.setting = setting;
 
         feeder = Feeder.getInstance();
@@ -16,7 +16,7 @@ public class LowerFeederControl extends CommandBase{
     }
 
     public void initialize(){
-        feeder.setLowerFeeder(setting);
+        feeder.setUpperFeeder(setting);
     }
 
     public boolean isFinished() {

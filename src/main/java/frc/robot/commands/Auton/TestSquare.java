@@ -6,9 +6,6 @@ import frc.robot.commands.Called.TimedDrive;
 import frc.robot.commands.Called.Turn;
 
 public class TestSquare extends SequentialCommandGroup {
-    private double angle;
-    private double speed;
-    private double time;
 
     public TestSquare(){
         addCommands(

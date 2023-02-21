@@ -27,7 +27,7 @@ public class TimedDrive extends CommandBase{
     }
 
     public void execute() {
-        drivetrain.setUnlimitedAllDrive(speed);
+        drivetrain.setFullAllDrive(speed);
     }
 
     public boolean isFinished() {

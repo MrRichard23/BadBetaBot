@@ -10,6 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Teleop.DrivetrainCommand;
 import frc.robot.commands.Teleop.IntakeCommand;
 import frc.robot.commands.Teleop.IntakeMotorCommand;
@@ -23,10 +24,14 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.commands.Auton.Practice;
 import frc.robot.commands.Auton.Square;
+import frc.robot.commands.Auton.TagChase;
 import frc.robot.commands.Auton.TestPractice;
 import frc.robot.commands.Auton.TestSquare;
+import frc.robot.commands.Called.TagCenter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.pathplanner.lib.auto.RamseteAutoBuilder;
 
 
 /**
@@ -36,6 +41,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = Drivetrain.getInstance();
   private final Intake intake = Intake.getInstance();
@@ -43,7 +49,6 @@ public class RobotContainer {
   private final Climber climber = Climber.getInstance();
   private final Feeder feeder = Feeder.getInstance();
   private final Shooter shooter = Shooter.getInstance();
-  public static SendableChooser<Command> autonCommandChooser = new SendableChooser<>();
 
   // private final Command DrivetrainCommand = new DrivetrainCommand();
   // private final Command IntakeCommand = new IntakeCommand();
@@ -52,6 +57,7 @@ public class RobotContainer {
   // private final Command ShooterCommand = new ShooterCommand();
 
   private final Compressor compressor = new Compressor(Constants.PNEUMATIC_PORT, PneumaticsModuleType.REVPH);
+  CommandXboxController commandXboxController = new CommandXboxController(Constants.XBOX_CONTROLLER_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -67,7 +73,7 @@ public class RobotContainer {
     shooter.setDefaultCommand(new ShooterCommand());
 
     configureButtonBindings();
-    displayChoices();
+    Auto.init();
   }
 
   /**
@@ -84,17 +90,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public void displayChoices(){
-    autonCommandChooser.addOption("nothing", null);
-    autonCommandChooser.addOption("Practice", new Practice(9));
-    autonCommandChooser.addOption("Square", new Square(22));
-    autonCommandChooser.addOption("TestSquare", new TestSquare());
-    autonCommandChooser.setDefaultOption("TestPractice", new TestPractice());
-
-    SmartDashboard.putData("auto choooser", autonCommandChooser);
-  }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return autonCommandChooser.getSelected();
+    return Auto.getSelected();
   }
 }

@@ -9,7 +9,7 @@ public class Climber extends SubsystemBase{
 
     private static DoubleSolenoid climberPiston = new DoubleSolenoid(Constants.PNEUMATIC_PORT, PneumaticsModuleType.REVPH, Constants.OPEN_CLIMBER_PISTON, Constants.CLOSE_CLIMBER_PISTON);
     
-    public static Climber  getInstance() {
+    public static Climber getInstance() {
         if(climber == null){
             climber = new Climber();
         }

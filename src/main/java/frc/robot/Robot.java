@@ -75,6 +75,9 @@ public class Robot extends TimedRobot {
     Operator.SmartDashboard5(Operator.getXVelocity(), "X Velocity");
     Operator.SmartDashboard6(Operator.getYVelocity(), "Y Velocity");
     Operator.SmartDashboard7(Operator.getZVelocity(), "Z Velocity");
+    Operator.SmartDashboard8(Operator.cameraX(), "Camera X");
+    Operator.SmartDashboard9(Operator.cameraY(), "Camera Y");
+    Operator.SmartDashboard10(Operator.cameraSee(), "Camera See");
   }
 
   @Override

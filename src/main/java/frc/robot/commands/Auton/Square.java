@@ -56,28 +56,28 @@ public class Square extends CommandBase{
         Operator.SmartDashboard1(currentTime, "Time");
 
         if(Logic.lessGreater(time0, currentTime, time1)){
-            drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            drivetrain.setFullAllDrive(drivetrainspeed);
             oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time1, currentTime, time2)){
             drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time2, currentTime, time3)){
-            drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            drivetrain.setFullAllDrive(drivetrainspeed);
             oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time3, currentTime, time4)){
             drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time4, currentTime, time5)){
-            drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            drivetrain.setFullAllDrive(drivetrainspeed);
             oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time5, currentTime, time6)){
             drivetrain.setTurnPID(-90, oldYaw);
         }
         else if(Logic.lessGreater(time6, currentTime, time7)){
-            drivetrain.setUnlimitedAllDrive(drivetrainspeed);
+            drivetrain.setFullAllDrive(drivetrainspeed);
             oldYaw = newYaw;
         }
         else if(Logic.lessGreater(time7, currentTime, time8)){

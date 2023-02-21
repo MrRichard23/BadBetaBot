@@ -87,12 +87,12 @@ public class DrivetrainCommand extends CommandBase{
     }
     else if(newButton4 == true){
       if(Operator.getRoll() < 0){
-        drivetrain.setUnlimitedLeftDrive(-0.1);
-        drivetrain.setUnlimitedRightDrive(0.1);
+        drivetrain.setFullLeftDrive(-0.1);
+        drivetrain.setFullRightDrive(0.1);
       }
       else{
-        drivetrain.setUnlimitedLeftDrive(0.1);
-        drivetrain.setUnlimitedRightDrive(-0.1);
+        drivetrain.setFullLeftDrive(0.1);
+        drivetrain.setFullRightDrive(-0.1);
       }
     }
     else if(alternateButton1 == true){
@@ -103,7 +103,7 @@ public class DrivetrainCommand extends CommandBase{
         drivetrain.setBalanceDrivetrain();
       }
       else{
-        drivetrain.setUnlimitedAllDrive(-0.05 * Logic.plusNeg(Operator.getPitch()));
+        drivetrain.setFullAllDrive(-0.05 * Logic.plusNeg(Operator.getPitch()));
       }
     }
     else{

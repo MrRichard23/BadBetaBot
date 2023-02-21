@@ -2,23 +2,16 @@ package frc.robot.commands.Auton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Called.IntakeControl;
-import frc.robot.commands.Called.IntakeMotorControl;
-import frc.robot.commands.Called.LowerFeederControl;
-import frc.robot.commands.Called.ShooterControl;
 import frc.robot.commands.Called.TimedDrive;
 import frc.robot.commands.Called.Turn;
 import frc.robot.commands.Called.Wait;
+import frc.robot.commands.Control.IntakeControl;
+import frc.robot.commands.Control.IntakeMotorControl;
+import frc.robot.commands.Control.LowerFeederControl;
+import frc.robot.commands.Control.ShooterControl;
 import frc.robot.subsystems.Intake;
 
 public class TestPractice extends SequentialCommandGroup{
-    private double angle;
-    private double speed;
-    private double time;
-    private boolean intake;
-    private double intakeMotor;
-    private double wait;
-
     public TestPractice(){
         addCommands(
                 new SequentialCommandGroup(
