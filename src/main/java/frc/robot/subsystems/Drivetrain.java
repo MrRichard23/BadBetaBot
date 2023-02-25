@@ -13,10 +13,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Operator;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SerialPort;
 
 
 public class Drivetrain extends SubsystemBase{
     private static Drivetrain drivetrain;
+    private static AHRS ahrs;
     Timer timer;
 
     private TalonFX masterLeftTalon;
@@ -38,6 +41,8 @@ public class Drivetrain extends SubsystemBase{
     public DifferentialDriveKinematics driveKinematics;
     
     private Drivetrain() {
+        ahrs = new AHRS(SerialPort.Port.kMXP);
+
         masterLeftTalon = new TalonFX(Constants.MASTER_LEFT_TALON_PORT);
         masterRightTalon = new TalonFX(Constants.MASTER_RIGHT_TALON_PORT);
         followLeftTalon = new TalonFX(Constants.FOLLOW_LEFT_TALON_PORT);
@@ -50,8 +55,10 @@ public class Drivetrain extends SubsystemBase{
 
         pose2d = new Pose2d();
 
-        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-Operator.ahrs().getYaw()), 
-        masterLeftTalon.getSelectedSensorPosition(), masterRightTalon.getSelectedSensorPosition(),
+        odometry = new DifferentialDriveOdometry(
+                ahrs.getRotation2d(),
+                masterLeftTalon.getSelectedSensorPosition(),
+                masterRightTalon.getSelectedSensorPosition(),
                 pose2d
         );
 
@@ -74,13 +81,41 @@ public class Drivetrain extends SubsystemBase{
         return drivetrain;
     }
 
+    public void periodic() {
+        pose2d = odometry.update(ahrs.getRotation2d(),
+                masterLeftTalon.getSelectedSensorPosition(),
+                masterRightTalon.getSelectedSensorPosition()
+        );
+    }
+
+
+
+    public static float getRoll(){
+        return (ahrs.getRoll() + 2.5f);
+    }
+    public static float getPitch(){
+        return (ahrs.getPitch() - 4.8f);
+    }
+    public static double getYaw(){
+        return ahrs.getYaw();
+    }
+    public static double getXVelocity(){
+        return ahrs.getVelocityX();
+    }
+    public static double getYVelocity(){
+        return ahrs.getVelocityY();
+    }
+    public static double getZVelocity(){
+        return ahrs.getVelocityZ();
+    }
+
 
     public Pose2d getPose() {
 		return odometry.getPoseMeters();
 	}
 
     public void resetPose(Pose2d pose) {
-		odometry.resetPosition(Operator.ahrs().getRotation2d(), masterLeftTalon.getSelectedSensorPosition(), masterRightTalon.getSelectedSensorPosition(), pose);
+		odometry.resetPosition(ahrs.getRotation2d(), masterLeftTalon.getSelectedSensorPosition(), masterRightTalon.getSelectedSensorPosition(), pose);
 	}
 
     public void setLeftDrive(double speed) {
@@ -147,7 +182,7 @@ public class Drivetrain extends SubsystemBase{
         }
     }
     public void setBalanceDrivetrain(){
-        double current = Operator.getPitch();
+        double current = Drivetrain.getPitch();
          masterLeftTalon.set(ControlMode.PercentOutput, 
                 balancePIDController.calculate(-current,0));
         masterRightTalon.set(ControlMode.PercentOutput, 
@@ -155,7 +190,7 @@ public class Drivetrain extends SubsystemBase{
     }
     public void setTurnPID(double degrees, double oldYaw){
 
-        double current =  Operator.getYaw();
+        double current =  Drivetrain.getYaw();
         double setpoint = degrees + oldYaw;
         // double setpoint =((degrees + oldYaw + 180) % 360) - 180;
         // if(setpoint - current > 180){

@@ -17,6 +17,8 @@ import frc.robot.commands.Teleop.IntakeMotorCommand;
 import frc.robot.subsystems.IntakeMotor;
 import frc.robot.commands.Teleop.ClimberCommand;
 import frc.robot.commands.Teleop.ShooterCommand;
+import frc.robot.commands.Teleop.LightsCommand;
+import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.Teleop.FeederCommand;
 import frc.robot.subsystems.Feeder;
@@ -49,6 +51,7 @@ public class RobotContainer {
   private final Climber climber = Climber.getInstance();
   private final Feeder feeder = Feeder.getInstance();
   private final Shooter shooter = Shooter.getInstance();
+  private final Lights lights = Lights.getInstance();
 
   // private final Command DrivetrainCommand = new DrivetrainCommand();
   // private final Command IntakeCommand = new IntakeCommand();
@@ -71,6 +74,7 @@ public class RobotContainer {
     intakeMotor.setDefaultCommand(new IntakeMotorCommand());
     feeder.setDefaultCommand(new FeederCommand());
     shooter.setDefaultCommand(new ShooterCommand());
+    lights.setDefaultCommand(new LightsCommand());
 
     configureButtonBindings();
     Auto.init();

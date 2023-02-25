@@ -49,7 +49,7 @@ public class Square extends CommandBase{
     }
 
     public void execute() {
-        newYaw = Operator.getYaw();
+        newYaw = Drivetrain.getYaw();
 
         currentTime = timer.get();
 

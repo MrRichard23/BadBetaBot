@@ -47,12 +47,12 @@ public class DrivetrainCommand extends CommandBase{
   @Override
   public void execute() {
     Operator.SmartDashboard1(Operator.getLeftThrottle(), "Sensitivity");
-    Operator.SmartDashboard2(Operator.getPitch(), "Pitch");
-    Operator.SmartDashboard3(Operator.getRoll(), "Roll");
-    Operator.SmartDashboard4(Operator.getYaw(), "Yaw");
-    Operator.SmartDashboard5(Operator.getXVelocity(), "X Velocity");
-    Operator.SmartDashboard6(Operator.getYVelocity(), "Y Velocity");
-    Operator.SmartDashboard7(Operator.getZVelocity(), "Z Velocity");
+    Operator.SmartDashboard2(Drivetrain.getPitch(), "Pitch");
+    Operator.SmartDashboard3(Drivetrain.getRoll(), "Roll");
+    Operator.SmartDashboard4(Drivetrain.getYaw(), "Yaw");
+    Operator.SmartDashboard5(Drivetrain.getXVelocity(), "X Velocity");
+    Operator.SmartDashboard6(Drivetrain.getYVelocity(), "Y Velocity");
+    Operator.SmartDashboard7(Drivetrain.getZVelocity(), "Z Velocity");
 
     oldButton1 = newButton1;
     newButton1 = Operator.getRightTrigger();
@@ -74,7 +74,7 @@ public class DrivetrainCommand extends CommandBase{
     pressedButton4 = Logic.pressedLogic(newButton4, oldButton4);
     alternateButton4 = Logic.pressed2ToggleLogic(pressedButton4, alternateButton4);
 
-    if(Logic.lessGreater(-3, Operator.getPitch(), 3)){
+    if(Logic.lessGreater(-3, Drivetrain.getPitch(), 3)){
       littlePitch++;
     }
     else{
@@ -86,7 +86,7 @@ public class DrivetrainCommand extends CommandBase{
       alternateButton1 = false;
     }
     else if(newButton4 == true){
-      if(Operator.getRoll() < 0){
+      if(Drivetrain.getRoll() < 0){
         drivetrain.setFullLeftDrive(-0.1);
         drivetrain.setFullRightDrive(0.1);
       }
@@ -99,11 +99,11 @@ public class DrivetrainCommand extends CommandBase{
       if(littlePitch > 25){
         drivetrain.setStopPID();
       }
-      else if(Logic.lessGreater(-15, Operator.getPitch(), 15)){
+      else if(Logic.lessGreater(-15, Drivetrain.getPitch(), 15)){
         drivetrain.setBalanceDrivetrain();
       }
       else{
-        drivetrain.setFullAllDrive(-0.05 * Logic.plusNeg(Operator.getPitch()));
+        drivetrain.setFullAllDrive(-0.05 * Logic.plusNeg(Drivetrain.getPitch()));
       }
     }
     else{

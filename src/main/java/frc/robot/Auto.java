@@ -14,6 +14,7 @@ import frc.robot.commands.Auton.Square;
 import frc.robot.commands.Auton.TagChase;
 import frc.robot.commands.Auton.TestPractice;
 import frc.robot.commands.Auton.TestSquare;
+import frc.robot.commands.Auton.Forwarding;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -55,17 +56,18 @@ public class Auto {
 
 	public static void addAutoOptions() {
 		// By default, the nothing option is selected
-		autoChooser.addOption("nothing", null);
-        autoChooser.addOption("Practice", new Practice(9));
-        autoChooser.addOption("Square", new Square(22));
-        autoChooser.addOption("TestSquare", new TestSquare());
-        autoChooser.setDefaultOption("Limelight", new TagChase());
-        autoChooser.addOption("TestPractice", new TestPractice());
-		autoChooser.addOption("Test", autoFromPathGroup("Test"));
+		// autoChooser.addOption("nothing", null);
+        // autoChooser.addOption("Practice", new Practice(9));
+        // autoChooser.addOption("Square", new Square(22));
+        // autoChooser.addOption("TestSquare", new TestSquare());
+        // autoChooser.addOption("Limelight", new TagChase());
+        // autoChooser.addOption("TestPractice", new TestPractice());
+		autoChooser.setDefaultOption("Test", autoFromPathGroup("Test"));
+		autoChooser.addOption("Forwards", new Forwarding());
 	}
 
 	public static CommandBase autoFromPathGroup(String name) {
-		return autoBuilder.fullAuto(PathPlanner.loadPathGroup(name, new PathConstraints(3, 3)));
+		return autoBuilder.fullAuto(PathPlanner.loadPathGroup(name, new PathConstraints(0.05, 0.05)));
 	}
 
 	/**
@@ -76,9 +78,9 @@ public class Auto {
 	}
 
 	public static void addEvents() {
-		eventMap.put("event1", new ClimberControl(true));
-		eventMap.put("event2", new ClimberControl(false));
-		eventMap.put("event3", new ClimberControl(true));
-		eventMap.put("event4", new ClimberControl(false));
+		// eventMap.put("event1", new ClimberControl(true));
+		// eventMap.put("event2", new ClimberControl(false));
+		// eventMap.put("event3", new ClimberControl(true));
+		// eventMap.put("event4", new ClimberControl(false));
     }
 }

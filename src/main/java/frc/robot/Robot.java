@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -69,12 +70,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Operator.SmartDashboard1(Operator.getLeftThrottle(), "Sensitivity");
-    Operator.SmartDashboard2(Operator.getPitch(), "Pitch");
-    Operator.SmartDashboard3(Operator.getRoll(), "Roll");
-    Operator.SmartDashboard4(Operator.getYaw(), "Yaw");
-    Operator.SmartDashboard5(Operator.getXVelocity(), "X Velocity");
-    Operator.SmartDashboard6(Operator.getYVelocity(), "Y Velocity");
-    Operator.SmartDashboard7(Operator.getZVelocity(), "Z Velocity");
+    Operator.SmartDashboard2(Drivetrain.getPitch(), "Pitch");
+    Operator.SmartDashboard3(Drivetrain.getRoll(), "Roll");
+    Operator.SmartDashboard4(Drivetrain.getYaw(), "Yaw");
+    Operator.SmartDashboard5(Drivetrain.getXVelocity(), "X Velocity");
+    Operator.SmartDashboard6(Drivetrain.getYVelocity(), "Y Velocity");
+    Operator.SmartDashboard7(Drivetrain.getZVelocity(), "Z Velocity");
     Operator.SmartDashboard8(Operator.cameraX(), "Camera X");
     Operator.SmartDashboard9(Operator.cameraY(), "Camera Y");
     Operator.SmartDashboard10(Operator.cameraSee(), "Camera See");

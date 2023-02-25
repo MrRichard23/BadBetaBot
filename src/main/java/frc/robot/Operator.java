@@ -1,8 +1,6 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort;
 
@@ -16,7 +14,6 @@ public class Operator{
     private static Joystick leftJoystick;
     private static Joystick rightJoystick;
     private static XboxController xboxController;
-    private static AHRS ahrs;
 
     private static NetworkTable table;
 
@@ -24,7 +21,6 @@ public class Operator{
         leftJoystick = new Joystick(Constants.JOYSTICK_LEFT_TALON_PORT);
         rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_TALON_PORT);
         xboxController = new XboxController(Constants.XBOX_CONTROLLER_PORT);
-        ahrs = new AHRS(SerialPort.Port.kMXP);
 
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
@@ -133,26 +129,7 @@ public class Operator{
     public static boolean getStartButton(){
         return xboxController.getStartButton();
     }
-
-    public static AHRS ahrs(){
-        return ahrs;
-    }
-    public static float getRoll(){
-        return (ahrs.getRoll() + 2.5f);
-    }
-    public static float getPitch(){
-        return (ahrs.getPitch() - 4.8f);
-    }
-    public static double getYaw(){
-        return ahrs.getYaw();
-    }
-    public static double getXVelocity(){
-        return ahrs.getVelocityX();
-    }
-    public static double getYVelocity(){
-        return ahrs.getVelocityY();
-    }
-    public static double getZVelocity(){
-        return ahrs.getVelocityZ();
+    public static double getPOV(){
+        return xboxController.getPOV();
     }
 }

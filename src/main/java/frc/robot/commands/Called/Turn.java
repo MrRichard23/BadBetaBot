@@ -18,7 +18,7 @@ public class Turn extends CommandBase{
     }
 
     public void initialize() {
-        oldAngle = Operator.getYaw();
+        oldAngle = Drivetrain.getYaw();
     }
 
     public void execute() {
